@@ -56,6 +56,11 @@ function App() {
 					<Route exact path='/register' element={<Register />} />
 					<Route exact path='/reset' element={<Reset />} />
 					<Route exact path='/dashboard' element={<Dashboard />} />
+					<Route exact path='/timer' element={<Dashboard />} />
+					<Route exact path='/new-pomodoro' element={<Dashboard />} />
+					<Route exact path='/new-task' element={<Dashboard />} />
+					<Route exact path='/statistics' element={<Dashboard />} />
+					<Route exact path='/settings' element={<Dashboard />} />
 				</Routes>
 			</Router>
 		</div>

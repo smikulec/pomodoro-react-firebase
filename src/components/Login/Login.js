@@ -44,6 +44,7 @@ export function Login() {
 					<input
 						type='text'
 						className='login__textBox'
+						name='email'
 						value={userData.email}
 						onChange={handleInputChange}
 						placeholder='E-mail Address'
@@ -51,6 +52,7 @@ export function Login() {
 					<input
 						type='password'
 						className='login__textBox'
+						name='password'
 						value={userData.password}
 						onChange={handleInputChange}
 						placeholder='Password'
