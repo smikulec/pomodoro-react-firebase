@@ -38,6 +38,9 @@
 }
 
 body {
-	background-color: #b0e8f0;
+	background-color: #e0f0f3;
+}
 
+.app {
+  display: flex;
 }
