@@ -1,0 +1,48 @@
+.main {
+	width: 100%;
+}
+
+.title {
+	margin-bottom: 50px;
+}
+
+.subtitle {
+	margin-bottom: 40px;
+}
+
+.circleContainer {
+	position: relative;
+	width: 22rem;
+	height: 22rem;
+}
+
+.buttonGroup {
+	margin-top: 40px;
+}
+
+.timerWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	row-gap: 30px;
+}
+
+.timeCounter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 5rem;
+	font-weight: 700;
+	color: #07076b;
+}
+
+.timerCounter {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
