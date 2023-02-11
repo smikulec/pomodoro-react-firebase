@@ -10,6 +10,7 @@ import {
 import './Register.scss';
 
 export function Register() {
+	// TODO: handle error state
 	const [user, loading, error] = useAuthState(auth);
 	const [userData, setUserData] = useState({
 		name: '',
@@ -17,14 +18,6 @@ export function Register() {
 		password: '',
 	});
 	const navigate = useNavigate();
-
-	const register = () => {
-		registerWithEmailAndPassword(
-			userData.name,
-			userData.email,
-			userData.password
-		);
-	};
 
 	useEffect(() => {
 		if (loading) return;
@@ -36,6 +29,14 @@ export function Register() {
 			const newData = { ...prevData };
 			return { ...newData, [event.target.name]: event.target.value };
 		});
+	};
+
+	const handleRegister = () => {
+		registerWithEmailAndPassword(
+			userData.name,
+			userData.email,
+			userData.password
+		);
 	};
 
 	return (
@@ -70,7 +71,7 @@ export function Register() {
 						onChange={handleInputChange}
 						placeholder='Password'
 					/>
-					<button className='register__btn' onClick={register}>
+					<button className='register__btn' onClick={handleRegister}>
 						Register
 					</button>
 					<button
