@@ -1,0 +1,42 @@
+.nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #2020f1;
+	color: white;
+	width: 350px;
+	height: calc(100vh - 50px);
+	border-radius: 10px;
+	margin: 20px;
+}
+
+.navTitle {
+	padding-top: 50px;
+}
+
+.navList {
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+
+.navListItem {
+	padding: 20px 0px;
+	text-align: center;
+
+	&:hover {
+		background-color: #0909da;
+		cursor: pointer;
+	}
+}
+
+.navLink {
+	text-decoration: none;
+	color: white;
+
+	&--active {
+		text-decoration: underline;
+		color: white;
+	}
+}
