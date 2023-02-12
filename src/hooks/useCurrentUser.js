@@ -1,7 +1,6 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db, logout } from '../firebase/firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export const useCurrentUser = () => {
