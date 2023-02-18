@@ -19,7 +19,7 @@ export const NavBar = () => {
 					<NavLink
 						to='/dashboard'
 						className={({ isActive }) =>
-							isActive ? styles.navListActive : styles.navLink
+							isActive ? styles.navLinkActive : styles.navLink
 						}>
 						Dashboard
 					</NavLink>
@@ -28,7 +28,7 @@ export const NavBar = () => {
 					<NavLink
 						to='/timer'
 						className={({ isActive }) =>
-							isActive ? styles.navListActive : styles.navLink
+							isActive ? styles.navLinkActive : styles.navLink
 						}>
 						Timer
 					</NavLink>
@@ -37,25 +37,16 @@ export const NavBar = () => {
 					<NavLink
 						to='/new-pomodoro'
 						className={({ isActive }) =>
-							isActive ? styles.navListActive : styles.navLink
+							isActive ? styles.navLinkActive : styles.navLink
 						}>
 						New pomodoro
 					</NavLink>
 				</li>
 				<li className={styles.navListItem}>
 					<NavLink
-						to='/new-task'
-						className={({ isActive }) =>
-							isActive ? styles.navListActive : styles.navLink
-						}>
-						New task
-					</NavLink>
-				</li>
-				<li className={styles.navListItem}>
-					<NavLink
 						to='/statistics'
 						className={({ isActive }) =>
-							isActive ? styles.navListActive : styles.navLink
+							isActive ? styles.navLinkActive : styles.navLink
 						}>
 						Statistics
 					</NavLink>
@@ -64,7 +55,7 @@ export const NavBar = () => {
 					<NavLink
 						to='/settings'
 						className={({ isActive }) =>
-							isActive ? styles.navListActive : styles.navLink
+							isActive ? styles.navLinkActive : styles.navLink
 						}>
 						Settings
 					</NavLink>

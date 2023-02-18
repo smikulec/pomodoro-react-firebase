@@ -34,9 +34,9 @@
 .navLink {
 	text-decoration: none;
 	color: white;
+}
 
-	&--active {
-		text-decoration: underline;
-		color: white;
-	}
+.navLinkActive {
+	text-decoration: underline;
+	color: white;
 }
