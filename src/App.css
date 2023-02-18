@@ -44,3 +44,7 @@ body {
 .app {
   display: flex;
 }
+
+main {
+  width: 100%;
+}
