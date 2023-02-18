@@ -4,6 +4,7 @@ import { query, collection, getDocs, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 export const useCurrentUser = () => {
+	// TODO handling errors
 	const [user, loading, error] = useAuthState(auth);
 	const [userData, setUserData] = useState({});
 
