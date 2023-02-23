@@ -13,7 +13,7 @@ function IconRenderer({ number }) {
 	return <>{icons}</>;
 }
 
-export const TaskCard = (taskData) => {
+export const TaskCard = ({ taskData, onDataChange }) => {
 	const [open, setOpen] = useState(null);
 
 	const editTaskModal = useEditTaskModal();
@@ -32,7 +32,7 @@ export const TaskCard = (taskData) => {
 
 	const handleEdit = () => {
 		handleCloseMenu();
-		editTaskModal.showModal({ taskData });
+		editTaskModal.showModal({ taskData, onDataChange });
 	};
 
 	const handleDelete = () => {
@@ -44,7 +44,7 @@ export const TaskCard = (taskData) => {
 			<Stack direction='row' alignItems='center' spacing={2}>
 				<Box sx={{ minWidth: 240, flexGrow: 1 }}>
 					<Typography color='inherit' variant='h6'>
-						{taskData?.title}
+						{taskData?.taskName}
 					</Typography>
 				</Box>
 
