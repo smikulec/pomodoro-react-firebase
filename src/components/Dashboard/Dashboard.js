@@ -4,12 +4,9 @@ import { Typography, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { TaskCard } from '../TaskCard';
 import { useTodosList } from '../../hooks/useTodosList';
-import { useState } from 'react';
 
 export function Dashboard() {
 	const { todoList, refreshTodoList } = useTodosList();
-
-	console.log(todoList);
 
 	return (
 		<>

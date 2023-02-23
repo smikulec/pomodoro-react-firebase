@@ -32,7 +32,6 @@ export const EditTaskModal = registerModalDialog(
 				totalTime: 0,
 				isCompleted: false,
 			};
-			console.log(data);
 			updateTodo(data);
 			onDataChange();
 			editTaskModalHandler.destroyModal();
@@ -41,8 +40,6 @@ export const EditTaskModal = registerModalDialog(
 		const handleCancelChanges = () => {
 			editTaskModalHandler.destroyModal();
 		};
-
-		console.log('isModalVisible', editTaskModalHandler.isModalVisible);
 
 		return (
 			<Modal
