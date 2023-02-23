@@ -1,28 +1,8 @@
-import { Button, Typography, Stack, Input } from '@mui/material';
+import { Button, Typography, Input } from '@mui/material';
 import { useState } from 'react';
 import { NavBar } from '../NavBar';
 import { useTodosList } from '../../hooks/useTodosList';
-
-const CounterWizard = ({ title, time, onLengthChange }) => {
-	const handleButtonClick = (action) => {
-		if (action === 'increment') {
-			onLengthChange((prev) => prev + 1);
-		} else if (action === 'decrement' && time > 0) {
-			onLengthChange((prev) => prev - 1);
-		}
-	};
-
-	return (
-		<div>
-			<Typography variant='h5'>{title}</Typography>
-			<Stack direction='row'>
-				<Button onClick={() => handleButtonClick('decrement')}>-</Button>
-				<span>{time}</span>
-				<Button onClick={() => handleButtonClick('increment')}>+</Button>
-			</Stack>
-		</div>
-	);
-};
+import { CounterWizard } from '../CounterWizard';
 
 export const Session = () => {
 	const [sessionLength, setSessionLength] = useState(25);
@@ -45,6 +25,8 @@ export const Session = () => {
 			sessionLength: sessionLength,
 			shortBreakLength: shortBreakLength,
 			longBreakLength: longBreakLength,
+			totalTime: 0,
+			isCompleted: false,
 		};
 		addTodo(data);
 	};
@@ -81,8 +63,7 @@ export const Session = () => {
 						time={rounds}
 						onLengthChange={setRounds}
 					/>
-
-					<Button onClick={handleSaveClick}>Save your preferences</Button>
+					<Button onClick={handleSaveClick}>Create new pomodoro</Button>
 				</div>
 			</main>
 		</>
