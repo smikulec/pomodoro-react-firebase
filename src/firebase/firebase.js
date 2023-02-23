@@ -18,13 +18,13 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyDGJM2heqOdL8S7f2QedDD6hw6mO_2f1w0',
-	authDomain: 'pomodoro-firebase-1bdc9.firebaseapp.com',
-	projectId: 'pomodoro-firebase-1bdc9',
-	storageBucket: 'pomodoro-firebase-1bdc9.appspot.com',
-	messagingSenderId: '1084917824156',
-	appId: '1:1084917824156:web:32760c6d9d05fff3c14b59',
-	measurementId: 'G-R4P499T75C',
+	apiKey: process.env.REACT_APP_API_KEY,
+	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_ID,
+	measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
