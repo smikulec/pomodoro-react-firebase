@@ -5,22 +5,66 @@ import { Timer } from './components/Timer';
 import { Session } from './components/Session/Session';
 import { Statistics } from './components/Statistics';
 import NiceModal from '@ebay/nice-modal-react';
+import { AuthProvider } from './contexts/AuthContext';
+import { ProtectedRoute } from './components/PrivateRoute';
 
 function App() {
 	return (
 		<div className='app'>
 			<NiceModal.Provider>
 				<Router>
-					<Routes>
-						<Route exact path='/register' element={<Register />} />
-						<Route exact path='/reset' element={<Reset />} />
-						<Route exact path='/dashboard' element={<Dashboard />} />
-						<Route exact path='/timer' element={<Timer />} />
-						<Route exact path='/new-pomodoro' element={<Session />} />
-						<Route exact path='/statistics' element={<Statistics />} />
-						<Route exact path='/settings' element={<Dashboard />} />
-						<Route exact path='/' element={<Login />} />
-					</Routes>
+					<AuthProvider>
+						<Routes>
+							<Route exact path='/login' element={<Login />} />
+							<Route exact path='/register' element={<Register />} />
+							<Route exact path='/reset' element={<Reset />} />
+							<Route
+								exact
+								path='/dashboard'
+								element={
+									<ProtectedRoute>
+										<Dashboard />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								exact
+								path='/timer'
+								element={
+									<ProtectedRoute>
+										<Timer />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								exact
+								path='/new-pomodoro'
+								element={
+									<ProtectedRoute>
+										<Session />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								exact
+								path='/statistics'
+								element={
+									<ProtectedRoute>
+										<Statistics />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								exact
+								path='/settings'
+								element={
+									<ProtectedRoute>
+										<Dashboard />
+									</ProtectedRoute>
+								}
+							/>
+						</Routes>
+					</AuthProvider>
 				</Router>
 			</NiceModal.Provider>
 		</div>
