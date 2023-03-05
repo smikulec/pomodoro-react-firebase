@@ -43,7 +43,7 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 		<Card sx={{ maxWidth: '700px', padding: '10px 20px', margin: '10px 0' }}>
 			<Stack direction='row' alignItems='center' spacing={2}>
 				<Box sx={{ minWidth: 240, flexGrow: 1 }}>
-					<Typography color='inherit' variant='h6'>
+					<Typography color='inherit' variant='subtitle1'>
 						{taskData?.taskName}
 					</Typography>
 				</Box>
