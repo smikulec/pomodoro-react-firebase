@@ -1,15 +1,15 @@
 import { NavLink } from 'react-router-dom';
-import { useCurrentUser } from '../../hooks/useCurrentUser';
 import Button from '@mui/material/Button';
 import styles from './NavBar.module.scss';
 import { styled } from '@mui/material/styles';
+import { useAuth } from '../../contexts/AuthContext';
 
 const LogoutButton = styled(Button)({
 	marginBottom: '30px',
 });
 
 export const NavBar = () => {
-	const { userData, logoutUser } = useCurrentUser();
+	const { userData, onLogout } = useAuth();
 
 	return (
 		<nav className={styles.nav}>
@@ -62,7 +62,7 @@ export const NavBar = () => {
 				</li>
 			</ul>
 			<div>
-				<LogoutButton variant='contained' onClick={logoutUser}>
+				<LogoutButton variant='contained' onClick={onLogout}>
 					Logout
 				</LogoutButton>
 			</div>
