@@ -7,10 +7,11 @@ import { Statistics } from './components/Statistics';
 import NiceModal from '@ebay/nice-modal-react';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/PrivateRoute';
+import { Layout } from './components/Layout';
 
 function App() {
 	return (
-		<div className='app'>
+		<>
 			<NiceModal.Provider>
 				<Router>
 					<AuthProvider>
@@ -23,7 +24,9 @@ function App() {
 								path='/dashboard'
 								element={
 									<ProtectedRoute>
-										<Dashboard />
+										<Layout>
+											<Dashboard />
+										</Layout>
 									</ProtectedRoute>
 								}
 							/>
@@ -32,7 +35,9 @@ function App() {
 								path='/timer'
 								element={
 									<ProtectedRoute>
-										<Timer />
+										<Layout>
+											<Timer />
+										</Layout>
 									</ProtectedRoute>
 								}
 							/>
@@ -41,7 +46,9 @@ function App() {
 								path='/new-pomodoro'
 								element={
 									<ProtectedRoute>
-										<Session />
+										<Layout>
+											<Session />
+										</Layout>
 									</ProtectedRoute>
 								}
 							/>
@@ -50,7 +57,9 @@ function App() {
 								path='/statistics'
 								element={
 									<ProtectedRoute>
-										<Statistics />
+										<Layout>
+											<Statistics />
+										</Layout>
 									</ProtectedRoute>
 								}
 							/>
@@ -59,7 +68,9 @@ function App() {
 								path='/settings'
 								element={
 									<ProtectedRoute>
-										<Dashboard />
+										<Layout>
+											<Dashboard />
+										</Layout>
 									</ProtectedRoute>
 								}
 							/>
@@ -67,7 +78,7 @@ function App() {
 					</AuthProvider>
 				</Router>
 			</NiceModal.Provider>
-		</div>
+		</>
 	);
 }
 
