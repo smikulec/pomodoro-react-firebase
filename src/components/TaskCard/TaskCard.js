@@ -4,6 +4,10 @@ import timeIcon from '../../assets/icons/time-icon.svg';
 import { useState } from 'react';
 import { Iconify } from '../Iconify';
 import { useEditTaskModal } from '../EditTaskModal/useEditTaskModal';
+import { Link } from 'react-router-dom';
+
+import styles from './TaskCard.module.scss';
+import { useTodosList } from '../../hooks/useTodosList';
 
 function IconRenderer({ number }) {
 	const icons = Array.from({ length: number }).map((_, i) => (
@@ -18,6 +22,8 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 
 	const editTaskModal = useEditTaskModal();
 
+	const { updateTodo, deleteTodo, refreshTodoList } = useTodosList();
+
 	const handleOpenMenu = (event) => {
 		setOpen(event.currentTarget);
 	};
@@ -27,6 +33,12 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 	};
 
 	const handleMarkComplete = () => {
+		const data = {
+			...taskData,
+			isCompleted: true,
+		};
+		updateTodo(data);
+		refreshTodoList();
 		handleCloseMenu();
 	};
 
@@ -36,6 +48,8 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 	};
 
 	const handleDelete = () => {
+		deleteTodo(taskData.id);
+		refreshTodoList();
 		handleCloseMenu();
 	};
 
@@ -44,7 +58,12 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 			<Stack direction='row' alignItems='center' spacing={2}>
 				<Box sx={{ minWidth: 240, flexGrow: 1 }}>
 					<Typography color='inherit' variant='subtitle1'>
-						{taskData?.taskName}
+						<Link
+							to='/timer'
+							state={{ data: taskData }}
+							className={styles.link}>
+							{taskData?.taskName}
+						</Link>
 					</Typography>
 				</Box>
 
