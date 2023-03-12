@@ -17,7 +17,9 @@ export const Modal = ({ title, isOpen, onClose, children }) => {
 	return (
 		<MuiModal open={isOpen} onClose={onClose}>
 			<Box sx={modalStyles}>
-				<Typography variant='h4'>{title}</Typography>
+				<Typography variant='h4' sx={{ mb: 4 }}>
+					{title}
+				</Typography>
 				{children}
 			</Box>
 		</MuiModal>
