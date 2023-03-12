@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-	auth,
-	logInWithEmailAndPassword,
-	signInWithGoogle,
-} from '../../firebase/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import './Login.scss';
+	IconButton,
+	InputAdornment,
+	Stack,
+	TextField,
+	Typography,
+	Button,
+	Divider,
+} from '@mui/material';
+import { Iconify } from '../Iconify/Iconify';
+import { useAuth } from '../../contexts/AuthContext/AuthProvider';
+import styles from './Login.module.scss';
 
 export function Login() {
-	const [user, loading, error] = useAuthState(auth);
+	const [showPassword, setShowPassword] = useState(false);
+	// const [user, loading, error] = useAuthState(auth);
 	const navigate = useNavigate();
+	const { onLogin, user, isLoading } = useAuth();
 
 	const [userData, setUserData] = useState({
 		name: '',
@@ -19,12 +26,12 @@ export function Login() {
 	});
 
 	useEffect(() => {
-		if (loading) {
+		if (isLoading) {
 			// maybe trigger a loading screen
 			return;
 		}
 		if (user) navigate('/dashboard');
-	}, [user, loading, navigate]);
+	}, [user, isLoading, navigate]);
 
 	const handleInputChange = (event) => {
 		setUserData((prevData) => {
@@ -34,49 +41,87 @@ export function Login() {
 	};
 
 	return (
-		<>
-			<div className='login__header'>
-				<h1>Welcome back</h1>
-				<h2>Please enter your credentials to access your account.</h2>
+		<div>
+			<div className={styles.header}>
+				<Typography variant='h1'>Welcome back</Typography>
+				<Typography variant='body1'>
+					Please enter your credentials to access your account.
+				</Typography>
+				<Typography variant='body1' sx={{ my: 5 }}>
+					Don’t have an account? {''}
+					<Link to='/register'>Register now.</Link>
+				</Typography>
 			</div>
-			<div className='login'>
-				<div className='login__container'>
-					<input
-						type='text'
-						className='login__textBox'
+
+			<div className={styles.container}>
+				<Divider sx={{ my: 3 }}>
+					<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+						OR
+					</Typography>
+				</Divider>
+
+				<Stack fullWidth spacing={3}>
+					<Button
+						fullWidth
+						size='large'
+						color='inherit'
+						variant='outlined'
+						onClick={onLogin}>
+						<Iconify
+							icon='eva:google-fill'
+							color='#DF3E30'
+							width={22}
+							height={22}
+						/>
+					</Button>
+
+					<TextField
 						name='email'
-						value={userData.email}
+						label='Email address'
 						onChange={handleInputChange}
-						placeholder='E-mail Address'
 					/>
-					<input
-						type='password'
-						className='login__textBox'
+					<TextField
 						name='password'
-						value={userData.password}
+						label='Password'
+						type={showPassword ? 'text' : 'password'}
 						onChange={handleInputChange}
-						placeholder='Password'
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position='end'>
+									<IconButton
+										onClick={() => setShowPassword(!showPassword)}
+										edge='end'>
+										<Iconify
+											icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'}
+										/>
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
-					<button
-						className='login__btn'
-						onClick={() =>
-							logInWithEmailAndPassword(userData.email, userData.password)
-						}>
-						Login
-					</button>
-					<button
-						className='login__btn login__google'
-						onClick={signInWithGoogle}>
-						Login with Google
-					</button>
-					<div>
-						<Link to='/reset'>Forgot Password</Link>
-					</div>
-					<div>
-						Don't have an account? <Link to='/register'>Register</Link> now.
-					</div>
-				</div>
+				</Stack>
+
+				<Stack
+					fullWidth
+					spacing={3}
+					direction='row'
+					alignItems='center'
+					justifyContent='flex-end'
+					sx={{ my: 2 }}>
+					<Link variant='subtitle2' underline='hover' to='/reset'>
+						Forgot password?
+					</Link>
+				</Stack>
+
+				<Button
+					fullWidth
+					size='large'
+					type='submit'
+					variant='contained'
+					onClick={() => onLogin(userData.email, userData.password)}>
+					Login
+				</Button>
 			</div>
-		</>
+		</div>
 	);
 }
