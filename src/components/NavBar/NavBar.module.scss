@@ -31,12 +31,15 @@
 	}
 }
 
+.navLink,
+.navLinkActive {
+	flex-grow: 1;
+}
+
 .navLink {
 	text-decoration: none;
-	color: white;
 }
 
 .navLinkActive {
 	text-decoration: underline;
-	color: white;
 }
