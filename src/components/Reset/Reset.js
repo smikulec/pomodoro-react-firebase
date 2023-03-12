@@ -1,9 +1,11 @@
+import { Button, TextField, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { auth, sendPasswordReset } from '../../firebase/firebase';
-import './Reset.scss';
+import styles from './Reset.module.scss';
 
 export function Reset() {
 	const [email, setEmail] = useState('');
@@ -15,24 +17,39 @@ export function Reset() {
 		if (user) navigate('/dashboard');
 	}, [user, loading, navigate]);
 
-	return (
-		<div className='reset'>
-			<div className='reset__container'>
-				<input
-					type='text'
-					className='reset__textBox'
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					placeholder='E-mail Address'
-				/>
-				<button className='reset__btn' onClick={() => sendPasswordReset(email)}>
-					Send password reset email
-				</button>
+	const handleInputChange = (event) => {
+		setEmail(event.target.value);
+	};
 
-				<div>
-					Don't have an account? <Link to='/register'>Register</Link> now.
-				</div>
+	return (
+		<>
+			<div className={styles.header}>
+				<Typography variant='h1'>Forgot your password?</Typography>
+				<Typography variant='body1' sx={{ my: 5 }}>
+					Let's help you set a new one.
+				</Typography>
 			</div>
-		</div>
+			<div className={styles.container}>
+				<Stack fullWidth spacing={3}>
+					<TextField
+						name='email'
+						label='Email address'
+						onChange={handleInputChange}
+					/>
+					<Button
+						fullWidth
+						size='large'
+						type='submit'
+						variant='contained'
+						onClick={() => sendPasswordReset(email)}>
+						Send password reset email
+					</Button>
+				</Stack>
+
+				<Typography variant='body1' sx={{ my: 5 }}>
+					Already have an account? <Link to='/login'>Login</Link> now.
+				</Typography>
+			</div>
+		</>
 	);
 }
