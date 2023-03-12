@@ -1,6 +1,5 @@
-import { Button, Typography, Input } from '@mui/material';
+import { Button, Typography, Input, Box } from '@mui/material';
 import { useState } from 'react';
-import { NavBar } from '../NavBar';
 import { useTodosList } from '../../hooks/useTodosList';
 import { CounterWizard } from '../CounterWizard';
 
@@ -32,40 +31,42 @@ export const Session = () => {
 	};
 
 	return (
-		<>
-			<NavBar />
-			<main className='main'>
-				<div>
-					<Typography variant='h5'>
-						Enter the task you want to work on
-					</Typography>
-					<Input onChange={handleInputChange} />
-				</div>
-				<div>
-					<Typography variant='h4'>Customize your pomodoros</Typography>
-					<CounterWizard
-						title='Set your work length'
-						time={sessionLength}
-						onLengthChange={setSessionLength}
-					/>
-					<CounterWizard
-						title='Set your short break length'
-						time={shortBreakLength}
-						onLengthChange={setShortBreakLength}
-					/>
-					<CounterWizard
-						title='Set your long break length'
-						time={longBreakLength}
-						onLengthChange={setLongBreakLength}
-					/>
-					<CounterWizard
-						title='Set the number of pomodoro rounds before the long break'
-						time={rounds}
-						onLengthChange={setRounds}
-					/>
-					<Button onClick={handleSaveClick}>Create new pomodoro</Button>
-				</div>
-			</main>
-		</>
+		<main className='main'>
+			<Typography variant='h4' sx={{ mb: 5 }}>
+				What would you like to work on?
+			</Typography>
+			<Box maxWidth='sm' sx={{ mb: 4 }}>
+				<Typography variant='h6'>Enter the task name</Typography>
+				<Input onChange={handleInputChange} fullWidth />
+			</Box>
+			<Box>
+				<Typography variant='h6' sx={{ mb: 3 }}>
+					Customize your pomodoros
+				</Typography>
+				<CounterWizard
+					title='Set your work session length'
+					time={sessionLength}
+					onLengthChange={setSessionLength}
+				/>
+				<CounterWizard
+					title='Set your short break length'
+					time={shortBreakLength}
+					onLengthChange={setShortBreakLength}
+				/>
+				<CounterWizard
+					title='Set your long break length'
+					time={longBreakLength}
+					onLengthChange={setLongBreakLength}
+				/>
+				<CounterWizard
+					title='Set the number of pomodoro rounds before the long break'
+					time={rounds}
+					onLengthChange={setRounds}
+				/>
+				<Button variant='contained' onClick={handleSaveClick}>
+					Create new pomodoro
+				</Button>
+			</Box>
+		</main>
 	);
 };
