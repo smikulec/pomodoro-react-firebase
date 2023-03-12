@@ -1,4 +1,5 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { Iconify } from '../Iconify';
 
 export const CounterWizard = ({ title, time, onLengthChange }) => {
 	const handleButtonClick = (action) => {
@@ -10,13 +11,23 @@ export const CounterWizard = ({ title, time, onLengthChange }) => {
 	};
 
 	return (
-		<div>
-			<Typography variant='h5'>{title}</Typography>
-			<Stack direction='row'>
-				<Button onClick={() => handleButtonClick('decrement')}>-</Button>
-				<span>{time}</span>
-				<Button onClick={() => handleButtonClick('increment')}>+</Button>
+		<Box sx={{ mb: 3 }}>
+			<Typography variant='subtitle1'>{title}</Typography>
+			<Stack direction='row' alignItems='center'>
+				<IconButton
+					onClick={() => handleButtonClick('decrement')}
+					color='primary'>
+					<Iconify icon='mdi:minus' />
+				</IconButton>
+				<Typography variant='subtitle1' color='text.primary' sx={{ px: 2 }}>
+					{time}
+				</Typography>
+				<IconButton
+					onClick={() => handleButtonClick('increment')}
+					color='primary'>
+					<Iconify icon='mdi:plus' />
+				</IconButton>
 			</Stack>
-		</div>
+		</Box>
 	);
 };
