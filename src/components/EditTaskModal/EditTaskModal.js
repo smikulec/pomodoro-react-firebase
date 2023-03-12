@@ -1,5 +1,5 @@
 import { Modal, useModalDialog } from '../Modal';
-import { Button, Input, InputLabel } from '@mui/material';
+import { Button, Input, InputLabel, Typography } from '@mui/material';
 import { CounterWizard } from '../CounterWizard';
 import { useState } from 'react';
 import { useTodosList } from '../../hooks/useTodosList';
@@ -43,12 +43,16 @@ export const EditTaskModal = registerModalDialog(
 
 		return (
 			<Modal
-				title={taskName}
+				title={taskData?.taskName}
 				isOpen={editTaskModalHandler.isModalVisible}
 				onClose={editTaskModalHandler.destroyModal}>
 				<Modal.Content>
-					<InputLabel>
+					<InputLabel sx={{ mb: 3 }}>
+						<Typography sx={{ mb: 1 }} color='text.primary'>
+							Change task name
+						</Typography>
 						<Input
+							name='taskName'
 							type='text'
 							value={taskName}
 							onChange={(event) => setTaskName(event.target.value)}
@@ -56,29 +60,33 @@ export const EditTaskModal = registerModalDialog(
 					</InputLabel>
 
 					<CounterWizard
-						title='Set your work length'
+						title='Change work length'
 						time={sessionLength}
 						onLengthChange={setSessionLength}
 					/>
 					<CounterWizard
-						title='Set your short break length'
+						title='Change short break length'
 						time={shortBreakLength}
 						onLengthChange={setShortBreakLength}
 					/>
 					<CounterWizard
-						title='Set your long break length'
+						title='Change long break length'
 						time={longBreakLength}
 						onLengthChange={setLongBreakLength}
 					/>
 					<CounterWizard
-						title='Set the number of pomodoro rounds before the long break'
+						title='Change the number of pomodoro rounds before the long break'
 						time={rounds}
 						onLengthChange={setRounds}
 					/>
 				</Modal.Content>
 				<Modal.Footer>
-					<Button onClick={handleCancelChanges}>Cancel</Button>
-					<Button onClick={handleSaveChanges}>Save changes</Button>
+					<Button variant='outlined' onClick={handleCancelChanges}>
+						Cancel
+					</Button>
+					<Button variant='contained' onClick={handleSaveChanges}>
+						Save changes
+					</Button>
 				</Modal.Footer>
 			</Modal>
 		);
