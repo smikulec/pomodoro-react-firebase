@@ -1,7 +1,14 @@
-import { Stack, CircularProgress, Button, Typography } from '@mui/material';
-import { NavBar } from '../NavBar';
+import {
+	Stack,
+	CircularProgress,
+	Button,
+	Typography,
+	Box,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useTodosList } from '../../hooks/useTodosList';
 
 import styles from './Timer.module.scss';
 
@@ -52,27 +59,31 @@ const TimeCounter = ({
 	);
 };
 
+const initialData = {
+	sessionLength: 0.5 * 60,
+	shortBreakLength: 0.25 * 60,
+	longBreakLength: 1 * 60,
+	rounds: 4,
+};
+
 export const Timer = () => {
+	const { state } = useLocation();
 	const [isActive, setIsActive] = useState(false);
 	const [timeSpent, setTimeSpent] = useState(0);
 	const [mode, setMode] = useState('session');
 	const [sessionCounter, setSessionCounter] = useState(1);
+	const { updateTodo } = useTodosList();
 
-	const state = {
-		sessionLength: 0.5 * 60,
-		shortBreakLength: 0.25 * 60,
-		longBreakLength: 1 * 60,
-		sessionNumber: 4,
-	};
+	const taskData = state ? state.data : initialData;
 
-	const isLongBreakTime = sessionCounter === state.sessionNumber;
+	const isLongBreakTime = sessionCounter === taskData.rounds;
 
 	const timeLeft =
 		(mode === 'session'
-			? state.sessionLength
+			? taskData.sessionLength * 60
 			: isLongBreakTime
-			? state.longBreakLength
-			: state.shortBreakLength) *
+			? taskData.longBreakLength * 60
+			: taskData.shortBreakLength * 60) *
 			1000 -
 		timeSpent;
 
@@ -89,15 +100,24 @@ export const Timer = () => {
 
 		if (timeLeft === 0) {
 			setTimeSpent(0);
-			setMode((mode) => (mode === 'session' ? 'break' : 'session'));
-			if (sessionCounter < state.sessionNumber) {
+
+			if (mode === 'session') {
+				const data = {
+					...taskData,
+					totalTime: taskData.totalTime + taskData.sessionLength,
+				};
+				updateTodo(data);
+			}
+			if (sessionCounter < taskData.rounds) {
 				setSessionCounter((prevCount) =>
 					mode === 'break' ? prevCount + 1 : prevCount
 				);
 			}
-			if (sessionCounter === state.sessionNumber) {
+			if (sessionCounter === taskData.rounds) {
 				setIsActive(false);
 			}
+
+			setMode((mode) => (mode === 'session' ? 'break' : 'session'));
 		}
 
 		return () => clearInterval(interval);
@@ -107,7 +127,8 @@ export const Timer = () => {
 		timeSpent,
 		timeLeft,
 		sessionCounter,
-		state.sessionNumber,
+		taskData,
+		updateTodo,
 	]);
 
 	const handleReset = () => {
@@ -116,47 +137,41 @@ export const Timer = () => {
 
 	const progress =
 		mode === 'session'
-			? Math.round((timeLeft / 1000 / state.sessionLength) * 100)
+			? Math.round((timeLeft / 1000 / taskData.sessionLength / 60) * 100)
 			: isLongBreakTime
-			? Math.round((timeLeft / 1000 / state.longBreakLength) * 100)
-			: Math.round((timeLeft / 1000 / state.shortBreakLength) * 100);
+			? Math.round((timeLeft / 1000 / taskData.longBreakLength / 60) * 100)
+			: Math.round((timeLeft / 1000 / taskData.shortBreakLength / 60) * 100);
 
 	return (
 		<>
-			<NavBar />
-			<main className={styles.main}>
-				<div className={styles.timerWrapper}>
-					<Typography textAlign='center' variant='h1' className={styles.title}>
-						Let's get to business!
-					</Typography>
-					<Typography textAlign='center' variant='h5' className={styles.title}>
-						Big chunky task name
-					</Typography>
-					<Typography
-						textAlign='center'
-						variant='h6'
-						className={styles.subtitle}>
-						{mode === 'session'
-							? 'Time to focus'
-							: isLongBreakTime
-							? 'Go have a nice long break, you deserved it!'
-							: 'Time to have a break, go stretch and move your bodeee'}
-					</Typography>
-					<TimeCounter
-						isActive={isActive}
-						toggleActive={setIsActive}
-						progress={progress}
-						time={timeLeft}
-						onReset={handleReset}
-						sessionRoundsProgress={`${sessionCounter} / ${state.sessionNumber}`}
-						onNext={() => {
-							if (sessionCounter < state.sessionNumber) {
-								setSessionCounter((prev) => prev + 1);
-							}
-						}}
-					/>
-				</div>
-			</main>
+			<Typography variant='h4' sx={{ mb: 5 }}>
+				Let's get down to business!
+			</Typography>
+			<Box>
+				<Typography variant='h5' color='text.secondary' sx={{ mb: 2 }}>
+					{taskData.taskName}
+				</Typography>
+				<Typography textAlign='center' variant='h6'>
+					{mode === 'session'
+						? 'Time to focus!'
+						: isLongBreakTime
+						? 'Go have a nice long break, you deserved it!'
+						: 'Time to have a break, go stretch and move your bodeee'}
+				</Typography>
+				<TimeCounter
+					isActive={isActive}
+					toggleActive={setIsActive}
+					progress={progress}
+					time={timeLeft}
+					onReset={handleReset}
+					sessionRoundsProgress={`${sessionCounter} / ${taskData.rounds}`}
+					onNext={() => {
+						if (sessionCounter < taskData.rounds) {
+							setSessionCounter((prev) => prev + 1);
+						}
+					}}
+				/>
+			</Box>
 		</>
 	);
 };
