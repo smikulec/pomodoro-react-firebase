@@ -8,6 +8,8 @@ import {
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSessionData } from '../../hooks/useSessionData';
+import { useTimetracker } from '../../hooks/useTimetracker';
 import { useTodosList } from '../../hooks/useTodosList';
 
 import styles from './Timer.module.scss';
@@ -21,7 +23,7 @@ const TimeCounter = ({
 	onReset,
 	progress,
 	isActive,
-	toggleActive,
+	onToggleActive,
 	sessionRoundsProgress,
 	onNext,
 }) => {
@@ -49,9 +51,7 @@ const TimeCounter = ({
 			</div>
 			<Stack direction='row' className={styles.buttonGroup}>
 				<Button onClick={onReset}>restart</Button>
-				<Button onClick={() => toggleActive((current) => !current)}>
-					{isActive ? 'stop' : 'start'}
-				</Button>
+				<Button onClick={onToggleActive}>{isActive ? 'stop' : 'start'}</Button>
 				<Button onClick={onNext}>next</Button>
 			</Stack>
 			<Typography variant='p'>{sessionRoundsProgress}</Typography>
@@ -73,6 +73,8 @@ export const Timer = () => {
 	const [mode, setMode] = useState('session');
 	const [sessionCounter, setSessionCounter] = useState(1);
 	const { updateTodo } = useTodosList();
+	const { updateTimetrack, timetrackData } = useTimetracker();
+	const { todaysSession, addSession, updateSession } = useSessionData();
 
 	const taskData = state ? state.data : initialData;
 
@@ -105,8 +107,23 @@ export const Timer = () => {
 				const data = {
 					...taskData,
 					totalTime: taskData.totalTime + taskData.sessionLength,
+					lastUpdated: new Date().toISOString(),
 				};
 				updateTodo(data);
+
+				const updatedTimetrackData = {
+					totalTime: timetrackData.totalTime + taskData.sessionLength,
+					lastUpdated: new Date().toISOString(),
+				};
+				updateTimetrack(updatedTimetrackData);
+
+				if (todaysSession) {
+					updateSession({
+						...todaysSession,
+						endTime: new Date().toISOString(),
+						totalTime: todaysSession.totalTime + taskData.sessionLength,
+					});
+				}
 			}
 			if (sessionCounter < taskData.rounds) {
 				setSessionCounter((prevCount) =>
@@ -129,10 +146,28 @@ export const Timer = () => {
 		sessionCounter,
 		taskData,
 		updateTodo,
+		timetrackData.totalTime,
+		updateTimetrack,
+		updateSession,
+		todaysSession,
+		addSession,
 	]);
 
 	const handleReset = () => {
 		setTimeSpent(0);
+		setSessionCounter(1);
+	};
+
+	const handleToggle = () => {
+		setIsActive((current) => !current);
+
+		if (mode === 'session' && sessionCounter === 1 && !todaysSession) {
+			addSession({
+				startTime: new Date().toISOString(),
+				endTime: null,
+				totalTime: 0,
+			});
+		}
 	};
 
 	const progress =
@@ -160,7 +195,7 @@ export const Timer = () => {
 				</Typography>
 				<TimeCounter
 					isActive={isActive}
-					toggleActive={setIsActive}
+					onToggleActive={handleToggle}
 					progress={progress}
 					time={timeLeft}
 					onReset={handleReset}
