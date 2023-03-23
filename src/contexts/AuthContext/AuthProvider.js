@@ -11,12 +11,13 @@ import {
 import { query, collection, getDocs, where } from 'firebase/firestore';
 import { useLocation, redirect } from 'react-router-dom';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext({ isLoggedIn: null });
 
 export const AuthProvider = ({ children }) => {
 	const location = useLocation();
 	const [user, loading, error] = useAuthState(auth);
-	const [userData, setUserData] = useState({});
+	const [userData, setUserData] = useState(null);
+	const [isLoadingData, setIsLoadingData] = useState(false);
 
 	useEffect(() => {
 		if (loading) return;
@@ -26,12 +27,15 @@ export const AuthProvider = ({ children }) => {
 
 		const fetchUserName = async () => {
 			try {
+				setIsLoadingData(true);
 				const q = query(collection(db, 'users'), where('uid', '==', user?.uid));
 				const doc = await getDocs(q);
 				const data = doc.docs[0].data();
 				setUserData(data);
 			} catch (err) {
 				console.error(err);
+			} finally {
+				setIsLoadingData(false);
 			}
 		};
 
@@ -57,8 +61,10 @@ export const AuthProvider = ({ children }) => {
 		onLogin: handleLogin,
 		onLogout: handleLogout,
 		userData: userData,
-		isUserDataLoading: loading,
+		isLoggingIn: loading,
 		user: user,
+		isLoggedIn: !!user,
+		isUserDataLoading: isLoadingData,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
