@@ -53,6 +53,10 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 		handleCloseMenu();
 	};
 
+	const pomodoroNumber = Math.round(
+		taskData.totalTime / taskData.sessionLength
+	);
+
 	return (
 		<Card sx={{ maxWidth: '700px', padding: '10px 20px', margin: '10px 0' }}>
 			<Stack direction='row' alignItems='center' spacing={2}>
@@ -68,7 +72,7 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 				</Box>
 
 				<Box>
-					<IconRenderer number={taskData?.pomodoroNumber} />
+					<IconRenderer number={pomodoroNumber} />
 				</Box>
 				<Box>
 					<IconButton
