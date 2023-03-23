@@ -39,12 +39,15 @@ export const useTodosList = () => {
 		if (!wholeTodos) {
 			return;
 		}
-		const newTodos = wholeTodos?.map((doc) => {
+
+		const newTodos = [];
+		wholeTodos.forEach((doc) => {
 			if (doc.data().userId === user?.uid) {
-				return {
+				const data = {
 					...doc.data(),
 					id: doc.id,
 				};
+				newTodos.push(data);
 			}
 		});
 		setTodos(newTodos);
@@ -55,7 +58,9 @@ export const useTodosList = () => {
 			const docRef = await addDoc(collection(db, 'todos'), {
 				...data,
 				userId: user?.uid,
+				createdAt: new Date().toISOString(),
 			});
+			fetchTodos();
 			console.log('Document written with ID: ', docRef.id);
 		} catch (e) {
 			console.error('Error adding document: ', e);
@@ -72,8 +77,9 @@ export const useTodosList = () => {
 				...data,
 				userId: user.uid,
 			});
+			fetchTodos();
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error updating document: ', e);
 		}
 	};
 
@@ -81,6 +87,7 @@ export const useTodosList = () => {
 		const docRef = doc(db, 'todos', documentId);
 		try {
 			await deleteDoc(docRef);
+			fetchTodos();
 		} catch (e) {
 			console.error('Error adding document: ', e);
 		}
