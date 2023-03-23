@@ -11,7 +11,6 @@ import {
 	ListItemButton,
 	ListItemText,
 	ListItem,
-	Typography,
 	AppBar,
 	IconButton,
 	Stack,
@@ -27,22 +26,17 @@ const navConfig = [
 	{
 		title: 'dashboard',
 		path: '/dashboard',
-	},
-	{
-		title: 'timer',
-		path: '/timer',
+		id: 0,
 	},
 	{
 		title: 'new pomodoro',
 		path: '/new-pomodoro',
+		id: 1,
 	},
 	{
 		title: 'statistics',
 		path: '/statistics',
-	},
-	{
-		title: 'settings',
-		path: '/settings',
+		id: 2,
 	},
 ];
 
@@ -61,7 +55,7 @@ const NavList = ({ data }) => {
 	return (
 		<List sx={{ padding: '50px 0' }}>
 			{data.map((item) => (
-				<ListItem disablePadding>
+				<ListItem disablePadding key={item.id}>
 					<StyledNavItem
 						component={NavLink}
 						to={item.path}
@@ -83,11 +77,6 @@ const NavList = ({ data }) => {
 const NavContent = ({ data, onButtonClick }) => {
 	return (
 		<Box sx={{ position: 'relative', height: '100%' }}>
-			<Typography
-				sx={{ padding: '90px 40px 20px 40px' }}
-				color='text.secondary'>
-				Logged in as {data.name}
-			</Typography>
 			<NavList data={navConfig} />
 			<LogoutButton
 				variant='contained'
@@ -106,7 +95,7 @@ const NavContent = ({ data, onButtonClick }) => {
 
 export const NavBar = () => {
 	const [open, setOpen] = useState(false);
-	const { userData, onLogout } = useAuth();
+	const { onLogout } = useAuth();
 	const isDesktop = useMediaQuery('(min-width: 1024px)');
 
 	return (
@@ -114,7 +103,7 @@ export const NavBar = () => {
 			component='nav'
 			sx={{
 				flexShrink: 0,
-				width: isDesktop ? NAV_WIDTH : 0,
+				minWidth: isDesktop ? NAV_WIDTH : 0,
 				bgcolor: 'background.paper',
 			}}>
 			{isDesktop ? (
@@ -125,12 +114,12 @@ export const NavBar = () => {
 					PaperProps={{
 						elevation: 3,
 						sx: {
-							width: NAV_WIDTH,
+							minWidth: NAV_WIDTH,
 							flexShrink: 0,
 							boxSizing: 'border-box',
 						},
 					}}>
-					<NavContent data={userData} onButtonClick={onLogout} />
+					<NavContent onButtonClick={onLogout} />
 				</Drawer>
 			) : (
 				<AppBar>
@@ -158,7 +147,7 @@ export const NavBar = () => {
 						PaperProps={{
 							sx: { width: NAV_WIDTH },
 						}}>
-						<NavContent data={userData} onButtonClick={onLogout} />
+						<NavContent onButtonClick={onLogout} />
 					</Drawer>
 				</AppBar>
 			)}
