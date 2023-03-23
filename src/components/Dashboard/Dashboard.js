@@ -9,6 +9,8 @@ import styles from './Dashboard.module.scss';
 export function Dashboard() {
 	const { todoList, refreshTodoList } = useTodosList();
 
+	const uncompletedTasks = todoList.filter((todo) => !todo.isCompleted);
+
 	return (
 		<>
 			<Typography variant='h4' sx={{ mb: 5 }}>
@@ -26,7 +28,7 @@ export function Dashboard() {
 				...or get back to something you've already worked on
 			</Typography>
 
-			{todoList.map((task) => (
+			{uncompletedTasks.map((task) => (
 				<TaskCard
 					taskData={task}
 					key={task.id}
