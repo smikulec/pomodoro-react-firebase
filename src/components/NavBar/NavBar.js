@@ -14,6 +14,7 @@ import {
 	AppBar,
 	IconButton,
 	Stack,
+	Typography,
 } from '@mui/material';
 import { Iconify } from '../Iconify';
 
@@ -24,19 +25,22 @@ const NAV_WIDTH = 280;
 
 const navConfig = [
 	{
-		title: 'dashboard',
-		path: '/dashboard',
 		id: 0,
+		title: 'Dashboard',
+		path: '/dashboard',
+		icon: 'material-symbols:space-dashboard-outline',
 	},
 	{
-		title: 'new pomodoro',
-		path: '/new-pomodoro',
 		id: 1,
+		title: 'New pomodoro',
+		path: '/new-pomodoro',
+		icon: 'material-symbols:timer-outline-rounded',
 	},
 	{
-		title: 'statistics',
-		path: '/statistics',
 		id: 2,
+		title: 'Statistics',
+		path: '/statistics',
+		icon: 'material-symbols:bar-chart-4-bars-rounded',
 	},
 ];
 
@@ -45,10 +49,10 @@ export const StyledNavItem = styled((props) => (
 ))(({ theme }) => ({
 	...theme.typography.body1,
 	position: 'relative',
-	textTransform: 'uppercase',
-	color: theme.palette.text.secondary,
-	borderRadius: theme.shape.borderRadius,
-	padding: '15px 40px',
+	color: '#000000',
+	borderRadius: '6px',
+	padding: '10px 20px',
+	margin: '10px 20px',
 }));
 
 const NavList = ({ data }) => {
@@ -60,12 +64,16 @@ const NavList = ({ data }) => {
 						component={NavLink}
 						to={item.path}
 						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							fontWeight: 400,
 							'&.active': {
 								color: 'text.primary',
-								bgcolor: 'action.selected',
+								bgcolor: 'primary.main',
 								fontWeight: 'fontWeightBold',
 							},
 						}}>
+						<Iconify icon={item.icon} sx={{ mr: 1.5, fontWeight: 400 }} />
 						<ListItemText disableTypography primary={item.title} />
 					</StyledNavItem>
 				</ListItem>
@@ -79,15 +87,19 @@ const NavContent = ({ data, onButtonClick }) => {
 		<Box sx={{ position: 'relative', height: '100%' }}>
 			<NavList data={navConfig} />
 			<LogoutButton
-				variant='contained'
+				variant='text'
 				onClick={onButtonClick}
 				sx={{
 					position: 'absolute',
 					bottom: '0',
-					left: '50%',
-					transform: 'translateX(-50%)',
+					left: '20px',
+					color: '#000000',
+					textTransform: 'capitalize',
 				}}>
-				Logout
+				<Iconify icon='material-symbols:logout-rounded' />
+				<Typography as='p1' sx={{ pl: 1, fontWeight: 700 }}>
+					log out
+				</Typography>
 			</LogoutButton>
 		</Box>
 	);
@@ -104,7 +116,7 @@ export const NavBar = () => {
 			sx={{
 				flexShrink: 0,
 				minWidth: isDesktop ? NAV_WIDTH : 0,
-				bgcolor: 'background.paper',
+				bgcolor: 'transparent',
 			}}>
 			{isDesktop ? (
 				<Drawer
@@ -122,7 +134,12 @@ export const NavBar = () => {
 					<NavContent onButtonClick={onLogout} />
 				</Drawer>
 			) : (
-				<AppBar>
+				<AppBar
+					sx={{
+						bgcolor: '#F5F2EA',
+						boxShadow: 'none',
+						py: 1,
+					}}>
 					<Stack
 						direction='row'
 						alignItems='center'
@@ -135,7 +152,11 @@ export const NavBar = () => {
 								display: { lg: 'none' },
 								width: '50px',
 							}}>
-							<Iconify icon='material-symbols:menu-rounded' color='white' />
+							<Iconify
+								icon='material-symbols:menu-rounded'
+								color='#D55448'
+								width='24px'
+							/>
 						</IconButton>
 					</Stack>
 					<Drawer
