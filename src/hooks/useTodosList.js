@@ -15,15 +15,18 @@ export const useTodosList = () => {
 	const [wholeTodos, setWholeTodos] = useState();
 	const [user] = useAuthState(auth);
 	const [isDataChanged, setIsDataChanged] = useState(false);
+	const [isDataFetching, setIsDataFetching] = useState(false);
 
 	const fetchTodos = useCallback(async () => {
-		const todosRef = collection(db, 'todos');
-		const todosSnap = await getDocs(todosRef);
-		if (todosSnap) {
-			setWholeTodos(todosSnap.docs);
-		} else {
-			// doc.data() will be undefined in this case
+		try {
+			setIsDataFetching(true);
+			const todosRef = collection(db, 'todos');
+			const todosSnap = await getDocs(todosRef);
+			setWholeTodos(todosSnap?.docs);
+		} catch (e) {
 			console.log('No such document!');
+		} finally {
+			setIsDataFetching(false);
 		}
 	}, []);
 
@@ -103,5 +106,6 @@ export const useTodosList = () => {
 		updateTodo,
 		deleteTodo,
 		refreshTodoList,
+		isLoading: isDataFetching,
 	};
 };

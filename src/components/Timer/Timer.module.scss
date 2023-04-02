@@ -16,10 +16,6 @@
 	height: 22rem;
 }
 
-.buttonGroup {
-	margin-top: 10px;
-}
-
 .timerWrapper {
 	display: flex;
 	flex-direction: column;
@@ -35,12 +31,11 @@
 	transform: translate(-50%, -50%);
 	font-size: 5rem;
 	font-weight: 700;
-	color: #07076b;
 }
 
 .timerCounter {
 	position: relative;
-	width: 100%;
+	width: fit-content;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

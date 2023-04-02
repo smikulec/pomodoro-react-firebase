@@ -1,8 +1,8 @@
 .link {
 	text-decoration: none;
-	color: darkblue;
+	color: black;
 
 	&:hover {
-		color: grey;
+		text-decoration: underline;
 	}
 }

@@ -4,6 +4,7 @@ import {
 	Button,
 	Typography,
 	Box,
+	IconButton,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
@@ -11,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import { useSessionData } from '../../hooks/useSessionData';
 import { useTimetracker } from '../../hooks/useTimetracker';
 import { useTodosList } from '../../hooks/useTodosList';
+import { Iconify } from '../Iconify';
 
 import styles from './Timer.module.scss';
 
@@ -37,7 +39,7 @@ const TimeCounter = ({
 					size='22rem'
 					variant='determinate'
 					value={100}
-					color='secondary'
+					sx={{ color: '#000000' }}
 				/>
 				<Circle
 					size='22rem'
@@ -49,12 +51,49 @@ const TimeCounter = ({
 					{min}:{sec.toString().length === 1 ? '0' + sec : sec}
 				</div>
 			</div>
-			<Stack direction='row' className={styles.buttonGroup}>
-				<Button onClick={onReset}>restart</Button>
-				<Button onClick={onToggleActive}>{isActive ? 'stop' : 'start'}</Button>
-				<Button onClick={onNext}>next</Button>
+			<Stack
+				direction='column'
+				alignItems='center'
+				sx={{ mt: 1, color: 'primary' }}>
+				<Box>
+					<IconButton onClick={onReset}>
+						<Iconify
+							icon='material-symbols:restart-alt-rounded'
+							width={40}
+							color='#000000'
+							sx={{ px: 2 }}
+						/>
+					</IconButton>
+					<IconButton onClick={onToggleActive}>
+						{isActive ? (
+							<Iconify
+								icon='material-symbols:stop-circle-outline-rounded'
+								width={40}
+								color='#000000'
+								sx={{ px: 2 }}
+							/>
+						) : (
+							<Iconify
+								icon='material-symbols:play-circle-outline-rounded'
+								width={40}
+								color='#000000'
+								sx={{ px: 2 }}
+							/>
+						)}
+					</IconButton>
+					<IconButton onClick={onNext}>
+						<Iconify
+							icon='material-symbols:next-plan-outline-rounded'
+							width={40}
+							color='#000000'
+							sx={{ px: 2 }}
+						/>
+					</IconButton>
+				</Box>
+				<Typography variant='p' fontWeight={600} fontSize='20px' sx={{ mt: 1 }}>
+					{sessionRoundsProgress}
+				</Typography>
 			</Stack>
-			<Typography variant='p'>{sessionRoundsProgress}</Typography>
 		</div>
 	);
 };
@@ -183,29 +222,36 @@ export const Timer = () => {
 				Let's get down to business!
 			</Typography>
 			<Box>
-				<Typography variant='h5' color='text.secondary' sx={{ mb: 2 }}>
+				<Typography variant='h5' color='text.primary' sx={{ mb: 3 }}>
 					{taskData.taskName}
 				</Typography>
-				<Typography textAlign='center' variant='h6'>
-					{mode === 'session'
-						? 'Time to focus!'
-						: isLongBreakTime
-						? 'Go have a nice long break, you deserved it!'
-						: 'Time to have a break, go stretch and move your bodeee'}
-				</Typography>
-				<TimeCounter
-					isActive={isActive}
-					onToggleActive={handleToggle}
-					progress={progress}
-					time={timeLeft}
-					onReset={handleReset}
-					sessionRoundsProgress={`${sessionCounter} / ${taskData.rounds}`}
-					onNext={() => {
-						if (sessionCounter < taskData.rounds) {
-							setSessionCounter((prev) => prev + 1);
-						}
-					}}
-				/>
+				<Box
+					sx={{
+						width: 'fit-content',
+						margin: { xs: 'auto', lg: 0 },
+						pl: { lg: '20%' },
+					}}>
+					<Typography textAlign='center' variant='h6' fontWeight={600}>
+						{mode === 'session'
+							? 'Time to focus!'
+							: isLongBreakTime
+							? 'Go have a nice long break, you deserved it!'
+							: 'Time to have a break, go stretch and move your bodeee'}
+					</Typography>
+					<TimeCounter
+						isActive={isActive}
+						onToggleActive={handleToggle}
+						progress={progress}
+						time={timeLeft}
+						onReset={handleReset}
+						sessionRoundsProgress={`${sessionCounter} / ${taskData.rounds}`}
+						onNext={() => {
+							if (sessionCounter < taskData.rounds) {
+								setSessionCounter((prev) => prev + 1);
+							}
+						}}
+					/>
+				</Box>
 			</Box>
 		</>
 	);
