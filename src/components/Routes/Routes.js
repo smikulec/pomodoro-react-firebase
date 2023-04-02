@@ -13,9 +13,9 @@ import { Loader } from '../Loader/Loader';
 
 export const RoutesWrapper = () => {
 	const { isUserDataLoading, isLoggedIn, isLoggingIn, userData } = useAuth();
-	const isLoading = isUserDataLoading || isLoggingIn || !userData;
+	const isLoading = isUserDataLoading || isLoggingIn;
 
-	if (isLoading) {
+	if (isLoading && !isLoggedIn && !userData) {
 		return <Loader />;
 	}
 
