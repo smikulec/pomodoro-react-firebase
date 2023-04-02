@@ -8,14 +8,15 @@ import {
 	Typography,
 	Button,
 	Divider,
+	Box,
 } from '@mui/material';
 import { Iconify } from '../Iconify/Iconify';
 import { useAuth } from '../../contexts/AuthContext/AuthProvider';
 import styles from './Login.module.scss';
+import { Container } from '@mui/system';
 
 export function Login() {
 	const [showPassword, setShowPassword] = useState(false);
-	// const [user, loading, error] = useAuthState(auth);
 	const navigate = useNavigate();
 	const { onLogin, user, isLoading } = useAuth();
 
@@ -41,87 +42,131 @@ export function Login() {
 	};
 
 	return (
-		<div>
-			<div className={styles.header}>
-				<Typography variant='h1'>Welcome back</Typography>
-				<Typography variant='body1'>
-					Please enter your credentials to access your account.
-				</Typography>
-				<Typography variant='body1' sx={{ my: 5 }}>
-					Don’t have an account? {''}
-					<Link to='/register'>Register now.</Link>
-				</Typography>
-			</div>
-
-			<div className={styles.container}>
-				<Divider sx={{ my: 3 }}>
-					<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-						OR
+		<div className={styles.wrapper}>
+			<Container
+				sx={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: '100vh',
+				}}>
+				<Box
+					sx={{
+						borderRadius: '35px',
+						backgroundColor: 'white',
+						maxWidth: '550px',
+						padding: '80px 50px',
+						width: '100%',
+					}}>
+					<Typography
+						variant='h4'
+						sx={{ fontWeight: 700, textAlign: 'center' }}>
+						Pomodoro Login
 					</Typography>
-				</Divider>
+					<Typography
+						variant='body1'
+						sx={{
+							my: 4,
+							mx: 'auto',
+							maxWidth: '360px',
+							textAlign: 'center',
+						}}>
+						Please enter your credentials to access your account.
+					</Typography>
 
-				<Stack fullWidth spacing={3}>
-					<Button
-						fullWidth
-						size='large'
-						color='inherit'
-						variant='outlined'
-						onClick={onLogin}>
-						<Iconify
-							icon='eva:google-fill'
-							color='#DF3E30'
-							width={22}
-							height={22}
-						/>
-					</Button>
+					<Box sx={{ maxWidth: '480px', margin: '0 auto' }}>
+						<Stack fullWidth spacing={3}>
+							<TextField
+								name='email'
+								label='Email address'
+								onChange={handleInputChange}
+							/>
+							<TextField
+								name='password'
+								label='Password'
+								type={showPassword ? 'text' : 'password'}
+								onChange={handleInputChange}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position='end'>
+											<IconButton
+												onClick={() => setShowPassword(!showPassword)}
+												edge='end'>
+												<Iconify
+													icon={
+														showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'
+													}
+												/>
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Stack>
 
-					<TextField
-						name='email'
-						label='Email address'
-						onChange={handleInputChange}
-					/>
-					<TextField
-						name='password'
-						label='Password'
-						type={showPassword ? 'text' : 'password'}
-						onChange={handleInputChange}
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position='end'>
-									<IconButton
-										onClick={() => setShowPassword(!showPassword)}
-										edge='end'>
-										<Iconify
-											icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'}
-										/>
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-					/>
-				</Stack>
+						<Stack
+							fullWidth
+							spacing={3}
+							direction='row'
+							alignItems='center'
+							sx={{ mt: 2, mb: 4 }}>
+							<Typography variant='body1'>
+								<Link to='/reset' className={styles.link}>
+									Forgot password?
+								</Link>
+							</Typography>
+						</Stack>
 
-				<Stack
-					fullWidth
-					spacing={3}
-					direction='row'
-					alignItems='center'
-					justifyContent='flex-end'
-					sx={{ my: 2 }}>
-					<Link variant='subtitle2' underline='hover' to='/reset'>
-						Forgot password?
-					</Link>
-				</Stack>
-
-				<Button
-					fullWidth
-					size='large'
-					type='submit'
-					variant='contained'
-					onClick={() => onLogin(userData.email, userData.password)}>
-					Login
-				</Button>
-			</div>
+						<Button
+							fullWidth
+							size='large'
+							type='submit'
+							variant='contained'
+							sx={{
+								py: 1.5,
+								textTransform: 'unset',
+								fontWeight: 600,
+								letterSpacing: 1.5,
+								':hover': { backgroundColor: '#eebc7d' },
+							}}
+							onClick={() => onLogin(userData.email, userData.password)}>
+							Login
+						</Button>
+					</Box>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}>
+						<Divider sx={{ mt: 4, width: '170px' }}>
+							<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+								or login with
+							</Typography>
+						</Divider>
+						<Button
+							size='large'
+							color='inherit'
+							variant='outlined'
+							onClick={onLogin}
+							sx={{
+								textTransform: 'unset',
+								mt: 4,
+							}}>
+							<Iconify icon='eva:google-fill' width={22} height={22} />
+							<Typography as='p1' sx={{ pl: 2, fontWeight: 600 }}>
+								Google
+							</Typography>
+						</Button>
+						<Typography variant='body1' sx={{ mt: 4, textAlign: 'center' }}>
+							Don’t have an account? {''}
+							<Link to='/register' className={styles.link}>
+								Register now.
+							</Link>
+						</Typography>
+					</Box>
+				</Box>
+			</Container>
 		</div>
 	);
 }

@@ -1,9 +1,13 @@
-.header {
-	padding-top: 100px;
-	text-align: center;
+.wrapper {
+	background: url('../../assets/images/login_background.svg') center no-repeat;
 }
 
-.container {
-	max-width: 480px;
-	margin: 0 auto;
+.link {
+	text-decoration: none;
+	font-weight: 600;
+	color: #000000;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
