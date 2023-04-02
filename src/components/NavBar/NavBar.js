@@ -55,7 +55,7 @@ export const StyledNavItem = styled((props) => (
 	margin: '10px 20px',
 }));
 
-const NavList = ({ data }) => {
+const NavList = ({ data, onNavClick }) => {
 	return (
 		<List sx={{ padding: '50px 0' }}>
 			{data.map((item) => (
@@ -72,7 +72,8 @@ const NavList = ({ data }) => {
 								bgcolor: 'primary.main',
 								fontWeight: 'fontWeightBold',
 							},
-						}}>
+						}}
+						onClick={onNavClick}>
 						<Iconify icon={item.icon} sx={{ mr: 1.5, fontWeight: 400 }} />
 						<ListItemText disableTypography primary={item.title} />
 					</StyledNavItem>
@@ -82,10 +83,10 @@ const NavList = ({ data }) => {
 	);
 };
 
-const NavContent = ({ data, onButtonClick }) => {
+const NavContent = ({ onButtonClick, onNavClick }) => {
 	return (
 		<Box sx={{ position: 'relative', height: '100%' }}>
-			<NavList data={navConfig} />
+			<NavList data={navConfig} onNavClick={onNavClick} />
 			<LogoutButton
 				variant='text'
 				onClick={onButtonClick}
@@ -151,6 +152,7 @@ export const NavBar = () => {
 								color: 'text.primary',
 								display: { lg: 'none' },
 								width: '50px',
+								height: '50px',
 							}}>
 							<Iconify
 								icon='material-symbols:menu-rounded'
@@ -168,7 +170,10 @@ export const NavBar = () => {
 						PaperProps={{
 							sx: { width: NAV_WIDTH },
 						}}>
-						<NavContent onButtonClick={onLogout} />
+						<NavContent
+							onButtonClick={onLogout}
+							onNavClick={() => setOpen(false)}
+						/>
 					</Drawer>
 				</AppBar>
 			)}
