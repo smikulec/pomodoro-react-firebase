@@ -9,6 +9,7 @@ import {
 	deleteDoc,
 } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAlert } from './useAlert';
 
 export const useTodosList = () => {
 	const [todos, setTodos] = useState([]);
@@ -16,6 +17,7 @@ export const useTodosList = () => {
 	const [user] = useAuthState(auth);
 	const [isDataChanged, setIsDataChanged] = useState(false);
 	const [isDataFetching, setIsDataFetching] = useState(false);
+	const { showAlert } = useAlert();
 
 	const fetchTodos = useCallback(async () => {
 		try {
@@ -58,15 +60,16 @@ export const useTodosList = () => {
 
 	const addTodo = async (data) => {
 		try {
-			const docRef = await addDoc(collection(db, 'todos'), {
+			await addDoc(collection(db, 'todos'), {
 				...data,
 				userId: user?.uid,
 				createdAt: new Date().toISOString(),
 			});
 			fetchTodos();
-			console.log('Document written with ID: ', docRef.id);
+			showAlert.success('Task successfully created!');
 		} catch (e) {
 			console.error('Error adding document: ', e);
+			showAlert.error('Something went wrong, please try again');
 		}
 	};
 
@@ -80,9 +83,11 @@ export const useTodosList = () => {
 				...data,
 				userId: user.uid,
 			});
+			showAlert.success('Task successfully updated!');
 			fetchTodos();
 		} catch (e) {
 			console.error('Error updating document: ', e);
+			showAlert.error('Something went wrong, please try again');
 		}
 	};
 
@@ -90,9 +95,11 @@ export const useTodosList = () => {
 		const docRef = doc(db, 'todos', documentId);
 		try {
 			await deleteDoc(docRef);
+			showAlert.success('Task successfully deleted!');
 			fetchTodos();
 		} catch (e) {
 			console.error('Error adding document: ', e);
+			showAlert.error('Something went wrong, please try again');
 		}
 	};
 
