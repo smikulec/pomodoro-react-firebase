@@ -9,19 +9,6 @@ import { useTodosList } from '../../hooks/useTodosList';
 
 import styles from './TaskCard.module.scss';
 
-function IconRenderer({ number }) {
-	const icons = Array.from({ length: number }).map((_, i) => (
-		<Iconify
-			icon='material-symbols:pace'
-			width={25}
-			height={25}
-			sx={{ color: '#D55448', px: '5px' }}
-		/>
-	));
-
-	return <>{icons}</>;
-}
-
 export const TaskCard = ({
 	taskData,
 	onDataChange,
