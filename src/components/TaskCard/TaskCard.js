@@ -19,7 +19,7 @@ export const TaskCard = ({
 
 	const editTaskModal = useEditTaskModal();
 
-	const { updateTodo, deleteTodo, refreshTodoList } = useTodosList();
+	const { updateTodo, deleteTodo } = useTodosList();
 
 	const handleOpenMenu = (event) => {
 		setOpen(event.currentTarget);
@@ -35,7 +35,7 @@ export const TaskCard = ({
 			isCompleted: true,
 		};
 		updateTodo(data);
-		refreshTodoList();
+		onDataChange();
 		handleCloseMenu();
 	};
 
@@ -46,7 +46,7 @@ export const TaskCard = ({
 
 	const handleDelete = () => {
 		deleteTodo(taskData.id);
-		refreshTodoList();
+		onDataChange();
 		handleCloseMenu();
 	};
 
@@ -123,9 +123,6 @@ export const TaskCard = ({
 				{!taskData?.isCompleted ? (
 					hasMenuButton ? (
 						<>
-							{/* <Stack direction='row'>
-								<IconRenderer number={pomodoroNumber} />
-							</Stack> */}
 							<Box sx={{ ml: '0 !important' }}>
 								<IconButton
 									size='large'
