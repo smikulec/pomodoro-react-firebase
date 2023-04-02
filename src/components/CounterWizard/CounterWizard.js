@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import { Iconify } from '../Iconify';
 
 export const CounterWizard = ({ title, time, onLengthChange }) => {
@@ -42,7 +42,12 @@ export const CounterWizard = ({ title, time, onLengthChange }) => {
 				<Typography
 					variant='subtitle1'
 					color='text.primary'
-					sx={{ px: 2, fontWeight: 600 }}>
+					sx={{
+						px: 2,
+						fontWeight: 600,
+						minWidth: '20px',
+						textAlign: 'center',
+					}}>
 					{time}
 				</Typography>
 				<IconButton
