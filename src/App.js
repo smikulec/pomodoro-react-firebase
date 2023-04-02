@@ -4,6 +4,8 @@ import NiceModal from '@ebay/nice-modal-react';
 import { AuthProvider } from './contexts/AuthContext';
 import { RoutesWrapper } from './components/Routes/Routes';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
 	palette: {
@@ -29,6 +31,12 @@ function App() {
 					</AuthProvider>
 				</Router>
 			</NiceModal.Provider>
+			<ToastContainer
+				position='bottom-right'
+				hideProgressBar={true}
+				autoClose={2000}
+				bodyClassName='custom-toast-body'
+			/>
 		</ThemeProvider>
 	);
 }

@@ -44,3 +44,8 @@ body {
 main {
   width: 100%;
 }
+
+/* Custom font for toast messages */
+.custom-toast-body {
+  font-family: 'Poppins', sans-serif;
+}
