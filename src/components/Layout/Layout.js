@@ -6,8 +6,8 @@ export const Layout = ({ children }) => {
 	return (
 		<div className={styles.container}>
 			<NavBar />
-			<main>
-				<Container sx={{ pt: 10 }} maxWidth='xl'>
+			<main className={styles.main}>
+				<Container sx={{ pt: 8, pb: 5 }} maxWidth='xl'>
 					{children}
 				</Container>
 			</main>

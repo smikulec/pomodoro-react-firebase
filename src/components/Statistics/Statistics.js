@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { useSessionData } from '../../hooks/useSessionData';
 import { useTodosList } from '../../hooks/useTodosList';
 import { StatCard } from '../StatCard';
@@ -13,47 +13,74 @@ export const Statistics = () => {
 	const uncompletedTasks = todoList.filter((todo) => !todo.isCompleted);
 
 	return (
-		<>
-			<Typography variant='h4'>
+		<Box>
+			<Typography variant='h4' sx={{ fontWeight: 700 }}>
 				Here you can see how much great work you've done
 			</Typography>
 			<Grid container spacing={3} sx={{ marginTop: '20px' }}>
 				<Grid item xs={12} sm={6} md={3}>
-					<StatCard title='Today' total={todaysSession.totalTime} />
+					<StatCard
+						title='Today'
+						total={todaysSession?.totalTime ?? 0}
+						icon='material-symbols:today-outline-rounded'
+					/>
 				</Grid>
 				<Grid item xs={12} sm={6} md={3}>
-					<StatCard title='Week' total={lastWeekData} />
+					<StatCard
+						title='Week'
+						total={lastWeekData}
+						icon='material-symbols:date-range-outline-rounded'
+					/>
 				</Grid>
 				<Grid item xs={12} sm={6} md={3}>
-					<StatCard title='Month' total={lastMonthData} />
+					<StatCard
+						title='Month'
+						total={lastMonthData}
+						icon='material-symbols:calendar-month-outline-rounded'
+					/>
 				</Grid>
 				<Grid item xs={12} sm={6} md={3}>
-					<StatCard title='Total' total={overallData} />
+					<StatCard
+						title='Total'
+						total={overallData}
+						icon='material-symbols:equal-rounded'
+					/>
 				</Grid>
 			</Grid>
 
-			<Grid container spacing={2} sx={{ marginTop: '20px' }}>
+			<Grid container spacing={3} sx={{ marginTop: '20px' }}>
 				<Grid item xs={12} sm={6} md={6}>
-					<Typography variant='h5'>Tasks completed</Typography>
-					{completedTasks.map((task) => (
-						<TaskCard
-							taskData={task}
-							key={task.id}
-							onDataChange={refreshTodoList}
-						/>
-					))}
+					<Typography variant='h5' sx={{ pl: 4, pb: 2 }}>
+						Tasks completed
+					</Typography>
+					<Paper sx={{ borderRadius: '28px', padding: '10px 20px' }}>
+						{completedTasks.map((task, index) => (
+							<TaskCard
+								taskData={task}
+								key={task.id}
+								onDataChange={refreshTodoList}
+								noBottomBorder={index === completedTasks.length - 1}
+							/>
+						))}
+					</Paper>
 				</Grid>
 				<Grid item xs={12} sm={6} md={6}>
-					<Typography variant='h5'>Tasks doing</Typography>
-					{uncompletedTasks.map((task) => (
-						<TaskCard
-							taskData={task}
-							key={task.id}
-							onDataChange={refreshTodoList}
-						/>
-					))}
+					<Typography variant='h5' sx={{ pl: 4, pb: 2 }}>
+						Tasks doing
+					</Typography>
+					<Paper sx={{ borderRadius: '28px', padding: '10px 20px' }}>
+						{uncompletedTasks.map((task, index) => (
+							<TaskCard
+								taskData={task}
+								key={task.id}
+								onDataChange={refreshTodoList}
+								noBottomBorder={index === uncompletedTasks.length - 1}
+								hasMenuButton={true}
+							/>
+						))}
+					</Paper>
 				</Grid>
 			</Grid>
-		</>
+		</Box>
 	);
 };

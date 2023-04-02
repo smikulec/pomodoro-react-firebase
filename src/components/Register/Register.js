@@ -1,5 +1,7 @@
 import {
+	Box,
 	Button,
+	Container,
 	Divider,
 	IconButton,
 	InputAdornment,
@@ -50,78 +52,111 @@ export function Register() {
 	};
 
 	return (
-		<>
-			<div className={styles.header}>
-				<Typography variant='h1'>Are you new here?</Typography>
-				<Typography variant='body1' sx={{ my: 5 }}>
-					Register so you can track your tasks and pomodoros.
-				</Typography>
-			</div>
+		<div className={styles.wrapper}>
+			<Container
+				sx={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: '100vh',
+				}}>
+				<Box
+					sx={{
+						borderRadius: '35px',
+						backgroundColor: 'white',
+						maxWidth: '550px',
+						padding: '80px 50px',
+						width: '100%',
+					}}>
+					<Typography
+						variant='h4'
+						sx={{ fontWeight: 700, textAlign: 'center' }}>
+						Are you new here?
+					</Typography>
+					<Typography
+						variant='body1'
+						sx={{ my: 4, mx: 'auto', maxWidth: '360px', textAlign: 'center' }}>
+						Register so you can track your tasks and the time you spend on them.
+					</Typography>
 
-			<div className={styles.container}>
-				<Stack fullWidth spacing={3}>
-					<Button
-						fullWidth
-						size='large'
-						color='inherit'
-						variant='outlined'
-						onClick={signInWithGoogle}>
-						Register with
-						<Iconify
-							icon='eva:google-fill'
-							color='#DF3E30'
-							width={22}
-							height={22}
-						/>
-					</Button>
-					<Divider sx={{ my: 3 }}>
-						<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-							OR
-						</Typography>
-					</Divider>
-					<TextField
-						name='name'
-						label='Full name'
-						onChange={handleInputChange}
-					/>
-					<TextField
-						name='email'
-						label='Email address'
-						onChange={handleInputChange}
-					/>
-					<TextField
-						name='password'
-						label='Password'
-						type={showPassword ? 'text' : 'password'}
-						onChange={handleInputChange}
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position='end'>
-									<IconButton
-										onClick={() => setShowPassword(!showPassword)}
-										edge='end'>
-										<Iconify
-											icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'}
-										/>
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-					/>
-					<Button
-						fullWidth
-						size='large'
-						type='submit'
-						variant='contained'
-						onClick={handleRegister}>
-						Register
-					</Button>
-				</Stack>
+					<div className={styles.container}>
+						<Stack fullWidth spacing={3}>
+							<TextField
+								name='name'
+								label='Full name'
+								onChange={handleInputChange}
+							/>
+							<TextField
+								name='email'
+								label='Email address'
+								onChange={handleInputChange}
+							/>
+							<TextField
+								name='password'
+								label='Password'
+								type={showPassword ? 'text' : 'password'}
+								onChange={handleInputChange}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position='end'>
+											<IconButton
+												onClick={() => setShowPassword(!showPassword)}
+												edge='end'>
+												<Iconify
+													icon={
+														showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'
+													}
+												/>
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
+							<Button
+								fullWidth
+								size='large'
+								type='submit'
+								variant='contained'
+								sx={{
+									py: 1.5,
+									textTransform: 'unset',
+									fontWeight: 600,
+									letterSpacing: 1.5,
+									':hover': { backgroundColor: '#eebc7d' },
+								}}
+								onClick={handleRegister}>
+								Register
+							</Button>
+						</Stack>
 
-				<Typography variant='body1' sx={{ my: 5 }}>
-					Already have an account? <Link to='/login'>Login</Link> now.
-				</Typography>
-			</div>
-		</>
+						<div className={styles.sectionContainer}>
+							<Divider sx={{ mt: 4, width: '170px' }}>
+								<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+									Or register with
+								</Typography>
+							</Divider>
+							<Button
+								size='large'
+								color='inherit'
+								variant='outlined'
+								onClick={signInWithGoogle}
+								sx={{ textTransform: 'unset', mt: 4 }}>
+								<Iconify icon='eva:google-fill' width={22} height={22} />
+								<Typography as='p1' sx={{ pl: 2, fontWeight: 600 }}>
+									Google
+								</Typography>
+							</Button>
+							<Typography variant='body1' sx={{ mt: 4, textAlign: 'center' }}>
+								Already have an account?{' '}
+								<Link to='/login' className={styles.link}>
+									Login now
+								</Link>
+								.
+							</Typography>
+						</div>
+					</div>
+				</Box>
+			</Container>
+		</div>
 	);
 }

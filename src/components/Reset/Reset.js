@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -22,34 +22,63 @@ export function Reset() {
 	};
 
 	return (
-		<>
-			<div className={styles.header}>
-				<Typography variant='h1'>Forgot your password?</Typography>
-				<Typography variant='body1' sx={{ my: 5 }}>
-					Let's help you set a new one.
-				</Typography>
-			</div>
-			<div className={styles.container}>
-				<Stack fullWidth spacing={3}>
-					<TextField
-						name='email'
-						label='Email address'
-						onChange={handleInputChange}
-					/>
-					<Button
-						fullWidth
-						size='large'
-						type='submit'
-						variant='contained'
-						onClick={() => sendPasswordReset(email)}>
-						Send password reset email
-					</Button>
-				</Stack>
+		<div className={styles.wrapper}>
+			<Container
+				sx={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: '100vh',
+				}}>
+				<Box
+					sx={{
+						borderRadius: '35px',
+						backgroundColor: 'white',
+						maxWidth: '550px',
+						padding: '80px 50px',
+						width: '100%',
+					}}>
+					<Typography
+						variant='h4'
+						sx={{ fontWeight: 700, textAlign: 'center' }}>
+						Forgot your password?
+					</Typography>
+					<Typography
+						variant='body1'
+						sx={{ my: 4, mx: 'auto', maxWidth: '360px', textAlign: 'center' }}>
+						Let's help you set a new one.
+					</Typography>
+					<div className={styles.container}>
+						<Stack fullWidth spacing={3}>
+							<TextField
+								name='email'
+								label='Email address'
+								onChange={handleInputChange}
+							/>
+							<Button
+								fullWidth
+								size='large'
+								type='submit'
+								variant='contained'
+								sx={{
+									textTransform: 'unset',
+									':hover': { backgroundColor: '#eebc7d' },
+								}}
+								onClick={() => sendPasswordReset(email)}>
+								Send password reset email
+							</Button>
+						</Stack>
 
-				<Typography variant='body1' sx={{ my: 5 }}>
-					Already have an account? <Link to='/login'>Login</Link> now.
-				</Typography>
-			</div>
-		</>
+						<Typography variant='body1' sx={{ my: 5 }}>
+							Already have an account?{' '}
+							<Link to='/login' className={styles.link}>
+								Login now
+							</Link>
+							.
+						</Typography>
+					</div>
+				</Box>
+			</Container>
+		</div>
 	);
 }

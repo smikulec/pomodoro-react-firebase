@@ -24,27 +24,27 @@ export const StatCard = ({
 	return (
 		<Card
 			sx={{
-				py: 5,
-				boxShadow: 0,
+				py: 3,
+				mx: 3,
 				textAlign: 'center',
 				color: (theme) => theme.palette[color].darker,
-				bgcolor: (theme) => theme.palette[color].lighter,
+				bgcolor: 'rgba(255, 255, 255, 0.9)',
+				borderRadius: '28px',
 				...sx,
 			}}
 			{...other}>
 			<StyledIcon
 				sx={{
-					color: (theme) => theme.palette[color].dark,
-					backgroundImage: (theme) =>
-						`linear-gradient(135deg, ${alpha(
-							theme.palette[color].dark,
-							0
-						)} 0%, ${alpha(theme.palette[color].dark, 0.24)} 100%)`,
+					color: '#D55448',
+					backgroundColor: '#D9D9D94A',
+					mb: 1,
 				}}>
-				<Iconify icon={icon} width={24} height={24} />
+				<Iconify icon={icon} width={30} height={30} />
 			</StyledIcon>
 
-			<Typography variant='h3'>{total}</Typography>
+			<Typography variant='h4' fontWeight={600}>
+				{total}
+			</Typography>
 
 			<Typography variant='subtitle2' sx={{ opacity: 0.72 }}>
 				{title}

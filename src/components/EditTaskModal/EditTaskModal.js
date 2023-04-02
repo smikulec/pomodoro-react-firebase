@@ -1,5 +1,5 @@
 import { Modal, useModalDialog } from '../Modal';
-import { Button, Input, InputLabel, Typography } from '@mui/material';
+import { Button, InputLabel, OutlinedInput } from '@mui/material';
 import { CounterWizard } from '../CounterWizard';
 import { useState } from 'react';
 import { useTodosList } from '../../hooks/useTodosList';
@@ -47,44 +47,59 @@ export const EditTaskModal = registerModalDialog(
 				isOpen={editTaskModalHandler.isModalVisible}
 				onClose={editTaskModalHandler.destroyModal}>
 				<Modal.Content>
-					<InputLabel sx={{ mb: 3 }}>
-						<Typography sx={{ mb: 1 }} color='text.primary'>
-							Change task name
-						</Typography>
-						<Input
-							name='taskName'
-							type='text'
-							value={taskName}
-							onChange={(event) => setTaskName(event.target.value)}
-						/>
+					<InputLabel sx={{ color: '#000000', fontWeight: 700, pb: 2 }}>
+						Change task name
 					</InputLabel>
+					<OutlinedInput
+						fullWidth
+						name='taskName'
+						type='text'
+						value={taskName}
+						sx={{ mb: 2 }}
+						onChange={(event) => setTaskName(event.target.value)}
+					/>
 
 					<CounterWizard
-						title='Change work length'
+						title='Work session length'
 						time={sessionLength}
 						onLengthChange={setSessionLength}
 					/>
 					<CounterWizard
-						title='Change short break length'
+						title='Pomodoro rounds'
+						time={rounds}
+						onLengthChange={setRounds}
+					/>
+					<CounterWizard
+						title='Short break length'
 						time={shortBreakLength}
 						onLengthChange={setShortBreakLength}
 					/>
 					<CounterWizard
-						title='Change long break length'
+						title='Long break length'
 						time={longBreakLength}
 						onLengthChange={setLongBreakLength}
 					/>
-					<CounterWizard
-						title='Change the number of pomodoro rounds before the long break'
-						time={rounds}
-						onLengthChange={setRounds}
-					/>
 				</Modal.Content>
 				<Modal.Footer>
-					<Button variant='outlined' onClick={handleCancelChanges}>
+					<Button
+						variant='outlined'
+						onClick={handleCancelChanges}
+						sx={{
+							textTransform: 'unset',
+							fontWeight: 700,
+
+							':hover': { backgroundColor: '#eebc7d', color: '#FFFFFF' },
+						}}>
 						Cancel
 					</Button>
-					<Button variant='contained' onClick={handleSaveChanges}>
+					<Button
+						variant='contained'
+						onClick={handleSaveChanges}
+						sx={{
+							textTransform: 'unset',
+							fontWeight: 700,
+							':hover': { backgroundColor: '#eebc7d' },
+						}}>
 						Save changes
 					</Button>
 				</Modal.Footer>

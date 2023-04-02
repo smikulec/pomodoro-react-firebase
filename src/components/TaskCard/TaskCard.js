@@ -1,23 +1,33 @@
 import { Card, IconButton, MenuItem, Popover, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import timeIcon from '../../assets/icons/time-icon.svg';
 import { useState } from 'react';
 import { Iconify } from '../Iconify';
 import { useEditTaskModal } from '../EditTaskModal/useEditTaskModal';
 import { Link } from 'react-router-dom';
 
-import styles from './TaskCard.module.scss';
 import { useTodosList } from '../../hooks/useTodosList';
+
+import styles from './TaskCard.module.scss';
 
 function IconRenderer({ number }) {
 	const icons = Array.from({ length: number }).map((_, i) => (
-		<img src={timeIcon} alt='hourglass icon' key={i} />
+		<Iconify
+			icon='material-symbols:pace'
+			width={25}
+			height={25}
+			sx={{ color: '#D55448', px: '5px' }}
+		/>
 	));
 
 	return <>{icons}</>;
 }
 
-export const TaskCard = ({ taskData, onDataChange }) => {
+export const TaskCard = ({
+	taskData,
+	onDataChange,
+	hasMenuButton = false,
+	noBottomBorder = false,
+}) => {
 	const [open, setOpen] = useState(null);
 
 	const editTaskModal = useEditTaskModal();
@@ -58,63 +68,146 @@ export const TaskCard = ({ taskData, onDataChange }) => {
 	);
 
 	return (
-		<Card sx={{ maxWidth: '700px', padding: '10px 20px', margin: '10px 0' }}>
+		<Card
+			sx={{
+				maxWidth: '700px',
+				padding: '20px 10px',
+				backgroundColor: 'transparent',
+				border: 'none',
+				borderBottom: noBottomBorder ? 'none' : '1px solid rgba(0, 0, 0, 0.09)',
+				boxShadow: 'none',
+			}}>
 			<Stack direction='row' alignItems='center' spacing={2}>
-				<Box sx={{ minWidth: 240, flexGrow: 1 }}>
-					<Typography color='inherit' variant='subtitle1'>
-						<Link
-							to='/timer'
-							state={{ data: taskData }}
-							className={styles.link}>
-							{taskData?.taskName}
-						</Link>
-					</Typography>
+				<Box
+					sx={{
+						minWidth: 240,
+						flexGrow: 1,
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+					}}>
+					<Box sx={{ display: 'flex', alignItems: 'center' }}>
+						<Iconify
+							icon='material-symbols:assignment-turned-in-outline-rounded'
+							sx={{
+								color: '#D55448',
+								backgroundColor: '#D9D9D94A',
+								padding: '15px',
+								borderRadius: '12px',
+							}}
+						/>
+
+						<Typography color='inherit' variant='subtitle1' sx={{ pl: 3 }}>
+							{hasMenuButton ? (
+								<Link
+									to='/timer'
+									state={{ data: taskData }}
+									className={styles.link}>
+									{taskData?.taskName}
+								</Link>
+							) : (
+								taskData?.taskName
+							)}
+						</Typography>
+					</Box>
+
+					{!taskData?.isCompleted && pomodoroNumber > 0 && (
+						<Stack direction='row' alignItems='center' flexWrap='nowrap'>
+							{pomodoroNumber > 1 && (
+								<Typography
+									sx={{
+										color: '#D55448',
+										fontSize: '21px',
+										fontWeight: '600',
+									}}>
+									{pomodoroNumber}
+								</Typography>
+							)}
+							<Iconify
+								icon='material-symbols:pace'
+								width={25}
+								height={25}
+								sx={{ color: '#D55448', px: '5px' }}
+							/>
+						</Stack>
+					)}
 				</Box>
 
-				<Box>
-					<IconRenderer number={pomodoroNumber} />
-				</Box>
-				<Box>
-					<IconButton
-						size='large'
-						color='inherit'
-						sx={{ opacity: 0.48 }}
-						onClick={handleOpenMenu}>
-						<Iconify icon={'eva:more-vertical-fill'} />
-					</IconButton>
+				{!taskData?.isCompleted ? (
+					hasMenuButton ? (
+						<>
+							{/* <Stack direction='row'>
+								<IconRenderer number={pomodoroNumber} />
+							</Stack> */}
+							<Box sx={{ ml: '0 !important' }}>
+								<IconButton
+									size='large'
+									color='inherit'
+									sx={{ opacity: 0.48 }}
+									onClick={handleOpenMenu}>
+									<Iconify
+										icon='eva:more-vertical-fill'
+										width={25}
+										height={25}
+									/>
+								</IconButton>
 
-					<Popover
-						open={Boolean(open)}
-						anchorEl={open}
-						onClose={handleCloseMenu}
-						anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-						transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-						PaperProps={{
-							sx: {
-								p: 1,
-								'& .MuiMenuItem-root': {
-									px: 1,
-									typography: 'body2',
-									borderRadius: 0.75,
-								},
-							},
-						}}>
-						<MenuItem onClick={handleMarkComplete}>
-							<Iconify icon={'eva:checkmark-circle-2-fill'} sx={{ mr: 2 }} />
-							Mark complete
-						</MenuItem>
+								<Popover
+									open={Boolean(open)}
+									anchorEl={open}
+									onClose={handleCloseMenu}
+									anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+									transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+									PaperProps={{
+										sx: {
+											p: 1,
+											'& .MuiMenuItem-root': {
+												px: 1,
+												typography: 'body2',
+												borderRadius: '28px',
+											},
+										},
+									}}>
+									<MenuItem onClick={handleMarkComplete}>
+										<Iconify
+											icon='eva:checkmark-circle-2-fill'
+											sx={{ mr: 2 }}
+										/>
+										Mark complete
+									</MenuItem>
 
-						<MenuItem onClick={handleEdit}>
-							<Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-							Edit
-						</MenuItem>
+									<MenuItem onClick={handleEdit}>
+										<Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+										Edit
+									</MenuItem>
 
-						<MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-							<Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-							Delete
-						</MenuItem>
-					</Popover>
-				</Box>
+									<MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+										<Iconify icon='eva:trash-2-outline' sx={{ mr: 2 }} />
+										Delete
+									</MenuItem>
+								</Popover>
+							</Box>
+						</>
+					) : (
+						<Box sx={{ flexShrink: 0 }}>
+							<Link to='/timer' state={{ data: taskData }}>
+								<IconButton
+									size='large'
+									color='inherit'
+									sx={{
+										backgroundColor: '#FCC78630',
+										padding: '15px',
+										':hover': { backgroundColor: '#e5b57930' },
+									}}>
+									<Iconify
+										icon='material-symbols:arrow-right-alt-rounded'
+										sx={{ color: '#D55448' }}
+									/>
+								</IconButton>
+							</Link>
+						</Box>
+					)
+				) : null}
 			</Stack>
 		</Card>
 	);

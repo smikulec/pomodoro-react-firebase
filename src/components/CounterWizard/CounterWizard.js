@@ -11,23 +11,51 @@ export const CounterWizard = ({ title, time, onLengthChange }) => {
 	};
 
 	return (
-		<Box sx={{ mb: 3 }}>
-			<Typography variant='subtitle1'>{title}</Typography>
-			<Stack direction='row' alignItems='center'>
+		<Stack
+			sx={{ mb: 3, maxWidth: '350px' }}
+			direction='row'
+			alignItems='center'
+			justifyContent='space-between'>
+			<Typography variant='subtitle1' fontWeight={700} sx={{ pb: 1, pr: 2 }}>
+				{title}:
+			</Typography>
+			<Stack
+				direction='row'
+				alignItems='center'
+				sx={{
+					padding: '6px',
+					backgroundColor: '#FFFFFF',
+					border: '1px solid #CBD5E1',
+					borderRadius: '6px',
+					width: 'fit-content',
+				}}>
 				<IconButton
 					onClick={() => handleButtonClick('decrement')}
-					color='primary'>
+					sx={{
+						color: '#000000',
+						borderRadius: '6px',
+						backgroundColor: 'primary.main',
+						':hover': { backgroundColor: '#eebc7d' },
+					}}>
 					<Iconify icon='mdi:minus' />
 				</IconButton>
-				<Typography variant='subtitle1' color='text.primary' sx={{ px: 2 }}>
+				<Typography
+					variant='subtitle1'
+					color='text.primary'
+					sx={{ px: 2, fontWeight: 600 }}>
 					{time}
 				</Typography>
 				<IconButton
 					onClick={() => handleButtonClick('increment')}
-					color='primary'>
+					sx={{
+						color: '#000000',
+						borderRadius: '6px',
+						backgroundColor: 'primary.main',
+						':hover': { backgroundColor: '#eebc7d' },
+					}}>
 					<Iconify icon='mdi:plus' />
 				</IconButton>
 			</Stack>
-		</Box>
+		</Stack>
 	);
 };
