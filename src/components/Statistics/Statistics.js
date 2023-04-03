@@ -3,9 +3,10 @@ import { useSessionData } from '../../hooks/useSessionData';
 import { useTodosList } from '../../hooks/useTodosList';
 import { StatCard } from '../StatCard';
 import { TaskCard } from '../TaskCard';
+import { Loader } from '../Loader/Loader';
 
 export const Statistics = () => {
-	const { todoList, refreshTodoList } = useTodosList();
+	const { todoList, refreshTodoList, isLoading } = useTodosList();
 	const { todaysSession, lastMonthData, lastWeekData, overallData } =
 		useSessionData();
 
@@ -54,14 +55,20 @@ export const Statistics = () => {
 						Tasks completed
 					</Typography>
 					<Paper sx={{ borderRadius: '28px', padding: '10px 20px' }}>
-						{completedTasks.map((task, index) => (
-							<TaskCard
-								taskData={task}
-								key={task.id}
-								onDataChange={refreshTodoList}
-								noBottomBorder={index === completedTasks.length - 1}
-							/>
-						))}
+						{isLoading ? (
+							<Box sx={{ height: '300px', position: 'relative' }}>
+								<Loader />
+							</Box>
+						) : (
+							completedTasks.map((task, index) => (
+								<TaskCard
+									taskData={task}
+									key={task.id}
+									onDataChange={refreshTodoList}
+									noBottomBorder={index === completedTasks.length - 1}
+								/>
+							))
+						)}
 					</Paper>
 				</Grid>
 				<Grid item xs={12} sm={6} md={6}>
@@ -69,15 +76,21 @@ export const Statistics = () => {
 						Tasks doing
 					</Typography>
 					<Paper sx={{ borderRadius: '28px', padding: '10px 20px' }}>
-						{uncompletedTasks.map((task, index) => (
-							<TaskCard
-								taskData={task}
-								key={task.id}
-								onDataChange={refreshTodoList}
-								noBottomBorder={index === uncompletedTasks.length - 1}
-								hasMenuButton={true}
-							/>
-						))}
+						{isLoading ? (
+							<Box sx={{ height: '300px', position: 'relative' }}>
+								<Loader />
+							</Box>
+						) : (
+							uncompletedTasks.map((task, index) => (
+								<TaskCard
+									taskData={task}
+									key={task.id}
+									onDataChange={refreshTodoList}
+									noBottomBorder={index === uncompletedTasks.length - 1}
+									hasMenuButton={true}
+								/>
+							))
+						)}
 					</Paper>
 				</Grid>
 			</Grid>
