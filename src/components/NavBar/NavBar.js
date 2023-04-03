@@ -98,7 +98,7 @@ const NavContent = ({ onButtonClick, onNavClick }) => {
 					textTransform: 'capitalize',
 				}}>
 				<Iconify icon='material-symbols:logout-rounded' />
-				<Typography as='p1' sx={{ pl: 1, fontWeight: 700 }}>
+				<Typography as='p' sx={{ pl: 1, fontWeight: 700 }}>
 					log out
 				</Typography>
 			</LogoutButton>
