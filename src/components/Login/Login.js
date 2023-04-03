@@ -14,35 +14,31 @@ import { Iconify } from '../Iconify/Iconify';
 import { useAuth } from '../../contexts/AuthContext/AuthProvider';
 import styles from './Login.module.scss';
 import { Container } from '@mui/system';
+import { useForm } from 'react-hook-form';
 
 export function Login() {
 	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
 	const { onLogin, user, isLoading } = useAuth();
-
-	const [userData, setUserData] = useState({
-		name: '',
-		email: '',
-		password: '',
-	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
 	useEffect(() => {
 		if (isLoading) {
-			// maybe trigger a loading screen
 			return;
 		}
 		if (user) navigate('/dashboard');
 	}, [user, isLoading, navigate]);
 
-	const handleInputChange = (event) => {
-		setUserData((prevData) => {
-			const newData = { ...prevData };
-			return { ...newData, [event.target.name]: event.target.value };
-		});
+	const handleLogin = (data) => {
+		onLogin(data.email, data.password);
 	};
 
 	return (
-		<div className={styles.wrapper}>
+		<form className={styles.wrapper} onSubmit={handleSubmit(handleLogin)}>
 			<Container
 				sx={{
 					display: 'flex',
@@ -79,13 +75,19 @@ export function Login() {
 							<TextField
 								name='email'
 								label='Email address'
-								onChange={handleInputChange}
+								{...register('email', {
+									required: 'This is required!',
+								})}
+								error={errors?.email ? true : false}
 							/>
 							<TextField
 								name='password'
 								label='Password'
 								type={showPassword ? 'text' : 'password'}
-								onChange={handleInputChange}
+								{...register('password', {
+									required: 'This is required!',
+								})}
+								error={errors?.password ? true : false}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position='end'>
@@ -129,7 +131,7 @@ export function Login() {
 								letterSpacing: 1.5,
 								':hover': { backgroundColor: '#eebc7d' },
 							}}
-							onClick={() => onLogin(userData.email, userData.password)}>
+							isLoading={isLoading}>
 							Login
 						</Button>
 					</Box>
@@ -154,7 +156,7 @@ export function Login() {
 								mt: 4,
 							}}>
 							<Iconify icon='eva:google-fill' width={22} height={22} />
-							<Typography as='p1' sx={{ pl: 2, fontWeight: 600 }}>
+							<Typography as='p' sx={{ pl: 2, fontWeight: 600 }}>
 								Google
 							</Typography>
 						</Button>
@@ -167,6 +169,6 @@ export function Login() {
 					</Box>
 				</Box>
 			</Container>
-		</div>
+		</form>
 	);
 }

@@ -11,24 +11,25 @@ import { Stack } from '@mui/system';
 import { useState } from 'react';
 import { useTodosList } from '../../hooks/useTodosList';
 import { CounterWizard } from '../CounterWizard';
+import { useForm } from 'react-hook-form';
 
 export const Session = () => {
 	const [sessionLength, setSessionLength] = useState(25);
 	const [shortBreakLength, setShortBreakLength] = useState(5);
 	const [longBreakLength, setLongBreakLength] = useState(15);
 	const [rounds, setRounds] = useState(4);
-	const [taskName, setTaskName] = useState('');
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
 	const { addTodo } = useTodosList();
 
-	const handleInputChange = (event) => {
-		setTaskName(event.target.value);
-	};
-
-	const handleSaveClick = (e) => {
-		e.preventDefault();
-		const data = {
-			taskName: taskName,
+	const handleSaveData = (data) => {
+		const preparedData = {
+			taskName: data.taskName,
 			rounds: rounds,
 			sessionLength: sessionLength,
 			shortBreakLength: shortBreakLength,
@@ -36,11 +37,11 @@ export const Session = () => {
 			totalTime: 0,
 			isCompleted: false,
 		};
-		addTodo(data);
+		addTodo(preparedData);
 	};
 
 	return (
-		<main className='main'>
+		<form onSubmit={handleSubmit(handleSaveData)}>
 			<Typography variant='h4' sx={{ mb: 5, fontWeight: 700 }}>
 				Create New Pomodoro
 			</Typography>
@@ -51,7 +52,11 @@ export const Session = () => {
 				<InputLabel sx={{ color: '#000000', fontWeight: 600, pb: 1 }}>
 					Task name
 				</InputLabel>
-				<OutlinedInput fullWidth onChange={handleInputChange} />
+				<OutlinedInput
+					fullWidth
+					{...register('taskName', { required: true })}
+					error={errors?.taskName ? true : false}
+				/>
 				<Divider
 					sx={{
 						width: '100px',
@@ -85,7 +90,8 @@ export const Session = () => {
 				<Button
 					fullWidth
 					variant='contained'
-					onClick={handleSaveClick}
+					type='submit'
+					// onClick={handleSaveClick}
 					sx={{
 						textTransform: 'unset',
 						fontWeight: 700,
@@ -96,6 +102,6 @@ export const Session = () => {
 					Add new pomodoro
 				</Button>
 			</Paper>
-		</main>
+		</form>
 	);
 };
