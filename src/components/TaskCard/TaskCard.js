@@ -29,7 +29,7 @@ export const TaskCard = ({
 		setOpen(null);
 	};
 
-	const handleMarkComplete = () => {
+	const handleMarkCompleteClick = () => {
 		const data = {
 			...taskData,
 			isCompleted: true,
@@ -39,14 +39,17 @@ export const TaskCard = ({
 		handleCloseMenu();
 	};
 
-	const handleEdit = () => {
+	const handleEditClick = () => {
 		handleCloseMenu();
 		editTaskModal.showModal({ taskData, onDataChange });
 	};
 
-	const handleDelete = () => {
+	const handleDeleteTask = () => {
 		deleteTodo(taskData.id);
 		onDataChange();
+	};
+	const handleDeleteClick = () => {
+		handleDeleteTask();
 		handleCloseMenu();
 	};
 
@@ -129,11 +132,7 @@ export const TaskCard = ({
 									color='inherit'
 									sx={{ opacity: 0.48 }}
 									onClick={handleOpenMenu}>
-									<Iconify
-										icon='eva:more-vertical-fill'
-										width={25}
-										height={25}
-									/>
+									<Iconify icon='eva:more-vertical-fill' />
 								</IconButton>
 
 								<Popover
@@ -148,25 +147,29 @@ export const TaskCard = ({
 											'& .MuiMenuItem-root': {
 												px: 1,
 												typography: 'body2',
-												borderRadius: '28px',
 											},
 										},
 									}}>
-									<MenuItem onClick={handleMarkComplete}>
+									<MenuItem onClick={handleMarkCompleteClick}>
 										<Iconify
-											icon='eva:checkmark-circle-2-fill'
+											icon='material-symbols:check-circle-outline-rounded'
 											sx={{ mr: 2 }}
 										/>
 										Mark complete
 									</MenuItem>
 
-									<MenuItem onClick={handleEdit}>
+									<MenuItem onClick={handleEditClick}>
 										<Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
 										Edit
 									</MenuItem>
 
-									<MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-										<Iconify icon='eva:trash-2-outline' sx={{ mr: 2 }} />
+									<MenuItem
+										onClick={handleDeleteClick}
+										sx={{ color: 'error.main' }}>
+										<Iconify
+											icon='material-symbols:delete-outline-rounded'
+											sx={{ mr: 2 }}
+										/>
 										Delete
 									</MenuItem>
 								</Popover>
@@ -191,7 +194,14 @@ export const TaskCard = ({
 							</Link>
 						</Box>
 					)
-				) : null}
+				) : (
+					<IconButton onClick={handleDeleteTask}>
+						<Iconify
+							icon='material-symbols:delete-outline-rounded'
+							sx={{ color: '#D55448' }}
+						/>
+					</IconButton>
+				)}
 			</Stack>
 		</Card>
 	);
