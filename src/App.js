@@ -8,12 +8,30 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
+	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					'&:hover': {
+						backgroundColor: '#eebc7d',
+					},
+				},
+			},
+		},
+	},
 	palette: {
 		primary: {
+			light: '#FCC78630',
 			main: '#FDC886',
+			contrastText: '#000000',
+			active: '#eebc7d',
+			lightHover: '#e5b57930',
 		},
 		secondary: {
 			main: '#D55448',
+		},
+		neutral: {
+			main: '#D9D9D94A',
 		},
 	},
 	typography: {
