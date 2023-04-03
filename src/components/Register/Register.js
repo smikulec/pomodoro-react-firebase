@@ -17,42 +17,33 @@ import {
 	signInWithGoogle,
 } from '../../firebase/firebase';
 import { Iconify } from '../Iconify/Iconify';
+import { useForm } from 'react-hook-form';
 
 import styles from './Register.module.scss';
 
 export function Register() {
 	// TODO: handle error state
-	const [userData, setUserData] = useState({
-		name: '',
-		email: '',
-		password: '',
-	});
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 	const { user, isLoading } = useAuth();
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
 	useEffect(() => {
 		if (isLoading) return;
 		if (user) navigate('/dashboard');
 	}, [user, isLoading, navigate]);
 
-	const handleInputChange = (event) => {
-		setUserData((prevData) => {
-			const newData = { ...prevData };
-			return { ...newData, [event.target.name]: event.target.value };
-		});
-	};
-
-	const handleRegister = () => {
-		registerWithEmailAndPassword(
-			userData.name,
-			userData.email,
-			userData.password
-		);
+	const handleRegister = (data) => {
+		registerWithEmailAndPassword(data.name, data.email, data.password);
 	};
 
 	return (
-		<div className={styles.wrapper}>
+		<form className={styles.wrapper} onSubmit={handleSubmit(handleRegister)}>
 			<Container
 				sx={{
 					display: 'flex',
@@ -84,18 +75,27 @@ export function Register() {
 							<TextField
 								name='name'
 								label='Full name'
-								onChange={handleInputChange}
+								{...register('name', {
+									required: 'This is required!',
+								})}
+								error={errors?.name ? true : false}
 							/>
 							<TextField
 								name='email'
 								label='Email address'
-								onChange={handleInputChange}
+								{...register('email', {
+									required: 'This is required!',
+								})}
+								error={errors?.email ? true : false}
 							/>
 							<TextField
 								name='password'
 								label='Password'
 								type={showPassword ? 'text' : 'password'}
-								onChange={handleInputChange}
+								{...register('password', {
+									required: 'This is required!',
+								})}
+								error={errors?.password ? true : false}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position='end'>
@@ -142,7 +142,7 @@ export function Register() {
 								onClick={signInWithGoogle}
 								sx={{ textTransform: 'unset', mt: 4 }}>
 								<Iconify icon='eva:google-fill' width={22} height={22} />
-								<Typography as='p1' sx={{ pl: 2, fontWeight: 600 }}>
+								<Typography as='p' sx={{ pl: 2, fontWeight: 600 }}>
 									Google
 								</Typography>
 							</Button>
@@ -157,6 +157,6 @@ export function Register() {
 					</div>
 				</Box>
 			</Container>
-		</div>
+		</form>
 	);
 }
