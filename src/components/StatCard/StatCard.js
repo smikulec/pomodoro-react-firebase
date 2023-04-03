@@ -1,6 +1,6 @@
 import { Card, Typography } from '@mui/material';
 import { Iconify } from '../Iconify';
-import { alpha, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 const StyledIcon = styled('div')(({ theme }) => ({
 	margin: 'auto',
