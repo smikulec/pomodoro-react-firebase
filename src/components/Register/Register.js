@@ -122,7 +122,6 @@ export function Register() {
 									textTransform: 'unset',
 									fontWeight: 600,
 									letterSpacing: 1.5,
-									':hover': { backgroundColor: '#eebc7d' },
 								}}
 								onClick={handleRegister}>
 								Register

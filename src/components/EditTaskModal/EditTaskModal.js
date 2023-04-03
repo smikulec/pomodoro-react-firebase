@@ -44,7 +44,8 @@ export const EditTaskModal = registerModalDialog(
 				onClose={editTaskModalHandler.destroyModal}>
 				<form onSubmit={handleSubmit(handleSaveChanges)}>
 					<Modal.Content>
-						<InputLabel sx={{ color: '#000000', fontWeight: 700, pb: 2 }}>
+						<InputLabel
+							sx={{ color: 'primary.contrastText', fontWeight: 700, pb: 2 }}>
 							Change task name
 						</InputLabel>
 						<OutlinedInput
@@ -85,7 +86,7 @@ export const EditTaskModal = registerModalDialog(
 								textTransform: 'unset',
 								fontWeight: 700,
 
-								':hover': { backgroundColor: '#eebc7d', color: '#FFFFFF' },
+								':hover': { color: '#FFFFFF' },
 							}}>
 							Cancel
 						</Button>
@@ -95,7 +96,6 @@ export const EditTaskModal = registerModalDialog(
 							sx={{
 								textTransform: 'unset',
 								fontWeight: 700,
-								':hover': { backgroundColor: '#eebc7d' },
 							}}>
 							Save changes
 						</Button>

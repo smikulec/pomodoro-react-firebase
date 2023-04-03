@@ -49,7 +49,8 @@ export const Session = () => {
 				<Typography variant='h6'>What would you like to work on?</Typography>
 			</Box>
 			<Paper sx={{ maxWidth: '450px', borderRadius: '28px', padding: '40px' }}>
-				<InputLabel sx={{ color: '#000000', fontWeight: 600, pb: 1 }}>
+				<InputLabel
+					sx={{ color: 'primary.contrastText', fontWeight: 600, pb: 1 }}>
 					Task name
 				</InputLabel>
 				<OutlinedInput
@@ -91,13 +92,11 @@ export const Session = () => {
 					fullWidth
 					variant='contained'
 					type='submit'
-					// onClick={handleSaveClick}
 					sx={{
 						textTransform: 'unset',
 						fontWeight: 700,
 						mt: 5,
 						py: 1.5,
-						':hover': { backgroundColor: '#eebc7d' },
 					}}>
 					Add new pomodoro
 				</Button>

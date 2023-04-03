@@ -38,7 +38,7 @@ const TimeCounter = ({
 					size='22rem'
 					variant='determinate'
 					value={100}
-					sx={{ color: '#000000' }}
+					sx={{ color: 'primary.contrastText' }}
 				/>
 				<Circle
 					size='22rem'
@@ -55,37 +55,37 @@ const TimeCounter = ({
 				alignItems='center'
 				sx={{ mt: 1, color: 'primary' }}>
 				<Box>
-					<IconButton onClick={onReset}>
+					<IconButton onClick={onReset} sx={{ mx: 2 }}>
 						<Iconify
 							icon='material-symbols:restart-alt-rounded'
 							width={40}
-							color='#000000'
-							sx={{ px: 2 }}
+							height={40}
+							color='primary.contrastText'
 						/>
 					</IconButton>
-					<IconButton onClick={onToggleActive}>
+					<IconButton onClick={onToggleActive} sx={{ mx: 2 }}>
 						{isActive ? (
 							<Iconify
 								icon='material-symbols:stop-circle-outline-rounded'
 								width={40}
-								color='#000000'
-								sx={{ px: 2 }}
+								height={40}
+								color='primary.contrastText'
 							/>
 						) : (
 							<Iconify
 								icon='material-symbols:play-circle-outline-rounded'
 								width={40}
-								color='#000000'
-								sx={{ px: 2 }}
+								height={40}
+								color='primary.contrastText'
 							/>
 						)}
 					</IconButton>
-					<IconButton onClick={onNext}>
+					<IconButton onClick={onNext} sx={{ mx: 2 }}>
 						<Iconify
 							icon='material-symbols:next-plan-outline-rounded'
 							width={40}
-							color='#000000'
-							sx={{ px: 2 }}
+							height={40}
+							color='primary.contrastText'
 						/>
 					</IconButton>
 				</Box>

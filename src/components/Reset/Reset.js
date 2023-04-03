@@ -9,7 +9,7 @@ import styles from './Reset.module.scss';
 
 export function Reset() {
 	const [email, setEmail] = useState('');
-	const [user, loading, error] = useAuthState(auth);
+	const [user, loading] = useAuthState(auth);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -62,7 +62,6 @@ export function Reset() {
 								variant='contained'
 								sx={{
 									textTransform: 'unset',
-									':hover': { backgroundColor: '#eebc7d' },
 								}}
 								onClick={() => sendPasswordReset(email)}>
 								Send password reset email

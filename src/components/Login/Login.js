@@ -129,7 +129,6 @@ export function Login() {
 								textTransform: 'unset',
 								fontWeight: 600,
 								letterSpacing: 1.5,
-								':hover': { backgroundColor: '#eebc7d' },
 							}}
 							isLoading={isLoading}>
 							Login

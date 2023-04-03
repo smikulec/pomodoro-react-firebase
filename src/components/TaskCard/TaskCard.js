@@ -80,8 +80,8 @@ export const TaskCard = ({
 						<Iconify
 							icon='material-symbols:assignment-turned-in-outline-rounded'
 							sx={{
-								color: '#D55448',
-								backgroundColor: '#D9D9D94A',
+								color: 'secondary.main',
+								backgroundColor: 'neutral.main',
 								padding: '15px',
 								borderRadius: '12px',
 							}}
@@ -106,7 +106,7 @@ export const TaskCard = ({
 							{pomodoroNumber > 1 && (
 								<Typography
 									sx={{
-										color: '#D55448',
+										color: 'secondary.main',
 										fontSize: '21px',
 										fontWeight: '600',
 									}}>
@@ -117,7 +117,7 @@ export const TaskCard = ({
 								icon='material-symbols:pace'
 								width={25}
 								height={25}
-								sx={{ color: '#D55448', px: '5px' }}
+								sx={{ color: 'secondary.main', px: '5px' }}
 							/>
 						</Stack>
 					)}
@@ -182,13 +182,13 @@ export const TaskCard = ({
 									size='large'
 									color='inherit'
 									sx={{
-										backgroundColor: '#FCC78630',
+										backgroundColor: 'primary.light',
 										padding: '15px',
-										':hover': { backgroundColor: '#e5b57930' },
+										':hover': { backgroundColor: 'primary.lightHover' },
 									}}>
 									<Iconify
 										icon='material-symbols:arrow-right-alt-rounded'
-										sx={{ color: '#D55448' }}
+										sx={{ color: 'secondary.main' }}
 									/>
 								</IconButton>
 							</Link>
@@ -198,7 +198,7 @@ export const TaskCard = ({
 					<IconButton onClick={handleDeleteTask}>
 						<Iconify
 							icon='material-symbols:delete-outline-rounded'
-							sx={{ color: '#D55448' }}
+							sx={{ color: 'secondary.main' }}
 						/>
 					</IconButton>
 				)}

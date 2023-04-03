@@ -27,7 +27,6 @@ export const StatCard = ({
 				py: 3,
 				mx: 3,
 				textAlign: 'center',
-				color: (theme) => theme.palette[color].darker,
 				bgcolor: 'rgba(255, 255, 255, 0.9)',
 				borderRadius: '28px',
 				...sx,
@@ -35,8 +34,8 @@ export const StatCard = ({
 			{...other}>
 			<StyledIcon
 				sx={{
-					color: '#D55448',
-					backgroundColor: '#D9D9D94A',
+					color: 'secondary.main',
+					backgroundColor: 'neutral.main',
 					mb: 1,
 				}}>
 				<Iconify icon={icon} width={30} height={30} />

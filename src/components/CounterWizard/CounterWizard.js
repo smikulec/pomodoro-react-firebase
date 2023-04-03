@@ -32,10 +32,10 @@ export const CounterWizard = ({ title, time, onLengthChange }) => {
 				<IconButton
 					onClick={() => handleButtonClick('decrement')}
 					sx={{
-						color: '#000000',
+						color: 'primary.contrastText',
 						borderRadius: '6px',
 						backgroundColor: 'primary.main',
-						':hover': { backgroundColor: '#eebc7d' },
+						':hover': { backgroundColor: 'primary.active' },
 					}}>
 					<Iconify icon='mdi:minus' />
 				</IconButton>
@@ -53,10 +53,10 @@ export const CounterWizard = ({ title, time, onLengthChange }) => {
 				<IconButton
 					onClick={() => handleButtonClick('increment')}
 					sx={{
-						color: '#000000',
+						color: 'primary.contrastText',
 						borderRadius: '6px',
 						backgroundColor: 'primary.main',
-						':hover': { backgroundColor: '#eebc7d' },
+						':hover': { backgroundColor: 'primary.active' },
 					}}>
 					<Iconify icon='mdi:plus' />
 				</IconButton>

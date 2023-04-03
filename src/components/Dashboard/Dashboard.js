@@ -44,7 +44,7 @@ export function Dashboard() {
 				fullWidth
 				variant='contained'
 				href='/new-pomodoro'
-				sx={{ ':hover': { backgroundColor: '#eebc7d' }, mt: 5 }}>
+				sx={{ mt: 5, py: 1.5 }}>
 				<Iconify icon='material-symbols:add-rounded' />
 				<Typography
 					sx={{ textTransform: 'capitalize', fontWeight: 700, pl: 1 }}>

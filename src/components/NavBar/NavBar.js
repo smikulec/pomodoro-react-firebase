@@ -49,7 +49,7 @@ export const StyledNavItem = styled((props) => (
 ))(({ theme }) => ({
 	...theme.typography.body1,
 	position: 'relative',
-	color: '#000000',
+	color: 'primary.contrastText',
 	borderRadius: '6px',
 	padding: '10px 20px',
 	margin: '10px 20px',
@@ -94,7 +94,7 @@ const NavContent = ({ onButtonClick, onNavClick }) => {
 					position: 'absolute',
 					bottom: '0',
 					left: '20px',
-					color: '#000000',
+					color: 'primary.contrastText',
 					textTransform: 'capitalize',
 				}}>
 				<Iconify icon='material-symbols:logout-rounded' />
@@ -156,7 +156,7 @@ export const NavBar = () => {
 							}}>
 							<Iconify
 								icon='material-symbols:menu-rounded'
-								color='#D55448'
+								color='secondary.main'
 								width='24px'
 							/>
 						</IconButton>
