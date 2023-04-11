@@ -15,7 +15,7 @@ const AuthContext = createContext({ isLoggedIn: null });
 
 export const AuthProvider = ({ children }) => {
 	const location = useLocation();
-	const [user, loading, error] = useAuthState(auth);
+	const [user, loading] = useAuthState(auth);
 	const [userData, setUserData] = useState(null);
 	const [isLoadingData, setIsLoadingData] = useState(false);
 

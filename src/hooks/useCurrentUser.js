@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 export const useCurrentUser = () => {
 	// TODO handling errors
-	const [user, loading, error] = useAuthState(auth);
+	const [user, loading] = useAuthState(auth);
 	const [userData, setUserData] = useState({});
 
 	useEffect(() => {

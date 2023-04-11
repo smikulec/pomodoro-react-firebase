@@ -3,7 +3,7 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 import { TaskCard } from '../../components';
 import { useTodosList } from '../../hooks';
 import { useAuth } from '../../contexts';
-import { Iconify, Loader } from '../../components';
+import { Iconify } from '../../components';
 
 export function Dashboard() {
 	const { userData } = useAuth();
