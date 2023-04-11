@@ -1,0 +1,5 @@
+{
+    "editor.foldingImportsByDefault": false,
+    "autoimport.showNotifications": true,
+    "javascript.updateImportsOnFileMove.enabled": "always"
+}
