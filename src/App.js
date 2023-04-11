@@ -1,11 +1,11 @@
-import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NiceModal from '@ebay/nice-modal-react';
-import { AuthProvider } from './contexts/AuthContext';
-import { RoutesWrapper } from './components/Routes/Routes';
+import { AuthProvider } from './contexts';
+import { RoutesWrapper } from './routes';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.scss';
 
 const theme = createTheme({
 	components: {
