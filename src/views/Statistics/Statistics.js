@@ -1,9 +1,6 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
-import { useSessionData } from '../../hooks/useSessionData';
-import { useTodosList } from '../../hooks/useTodosList';
-import { StatCard } from '../StatCard';
-import { TaskCard } from '../TaskCard';
-import { Loader } from '../Loader/Loader';
+import { useSessionData, useTodosList } from '../../hooks';
+import { StatCard, TaskCard, Loader } from '../../components';
 
 export const Statistics = () => {
 	const { todoList, refreshTodoList, isLoading } = useTodosList();

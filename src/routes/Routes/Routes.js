@@ -1,15 +1,16 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import { Dashboard } from '../Dashboard';
-import { Layout } from '../Layout';
-import { Login } from '../Login';
+import { useAuth } from '../../contexts';
+import {
+	Dashboard,
+	Login,
+	Register,
+	Reset,
+	Session,
+	Statistics,
+	Timer,
+} from '../../views';
 import { ProtectedRoute } from '../PrivateRoute';
-import { Register } from '../Register';
-import { Reset } from '../Reset';
-import { Session } from '../Session/Session';
-import { Statistics } from '../Statistics';
-import { Timer } from '../Timer';
-import { Loader } from '../Loader/Loader';
+import { Loader, Layout } from '../../components';
 
 export const RoutesWrapper = () => {
 	const { isUserDataLoading, isLoggedIn, isLoggingIn, userData } = useAuth();

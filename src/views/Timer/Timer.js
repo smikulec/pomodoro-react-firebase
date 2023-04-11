@@ -8,10 +8,8 @@ import {
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSessionData } from '../../hooks/useSessionData';
-import { useTimetracker } from '../../hooks/useTimetracker';
-import { useTodosList } from '../../hooks/useTodosList';
-import { Iconify } from '../Iconify';
+import { useSessionData, useTimetracker, useTodosList } from '../../hooks';
+import { Iconify } from '../../components';
 
 import styles from './Timer.module.scss';
 

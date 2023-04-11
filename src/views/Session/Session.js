@@ -9,8 +9,8 @@ import {
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { useTodosList } from '../../hooks/useTodosList';
-import { CounterWizard } from '../CounterWizard';
+import { useTodosList } from '../../hooks';
+import { CounterWizard } from '../../components';
 import { useForm } from 'react-hook-form';
 
 export const Session = () => {
