@@ -21,6 +21,10 @@ If you would like to run the project on your own you can run the following scrip
 - `npm install` - installs all the necessary npm packages
 - `npm start` - runs the app in the development mode
 
+## Acknowledgements
+
+Thanks to Iva for the help in setting up the app design.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
