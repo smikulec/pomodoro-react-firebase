@@ -51,7 +51,7 @@ export function Login() {
 						borderRadius: '35px',
 						backgroundColor: 'white',
 						maxWidth: '550px',
-						padding: '80px 50px',
+						padding: { xs: '40px 25px', sm: '80px 50px' },
 						width: '100%',
 					}}>
 					<Typography

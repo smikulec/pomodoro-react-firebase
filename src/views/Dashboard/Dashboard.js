@@ -1,9 +1,8 @@
 import React from 'react';
 import { Box, Button, Paper, Typography } from '@mui/material';
-import { TaskCard } from '../../components';
+import { Loader, TaskCard, Iconify } from '../../components';
 import { useTodosList } from '../../hooks';
 import { useAuth } from '../../contexts';
-import { Iconify } from '../../components';
 
 export function Dashboard() {
 	const { userData } = useAuth();
@@ -21,10 +20,11 @@ export function Dashboard() {
 				before or start something new.
 			</Typography>
 
-			<Paper sx={{ borderRadius: '28px', padding: '10px 20px' }}>
+			<Paper
+				sx={{ borderRadius: '28px', padding: { xs: '10px', sm: '10px 20px' } }}>
 				{isLoading ? (
 					<Box sx={{ height: '300px', position: 'relative' }}>
-						{/* <Loader /> */}
+						<Loader />
 					</Box>
 				) : (
 					uncompletedTasks.map((task, index) => (

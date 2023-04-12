@@ -82,7 +82,7 @@ export const TaskCard = ({
 							sx={{
 								color: 'secondary.main',
 								backgroundColor: 'neutral.main',
-								padding: '15px',
+								padding: { xs: '10px', sm: '15px' },
 								borderRadius: '12px',
 							}}
 						/>
@@ -107,7 +107,7 @@ export const TaskCard = ({
 								<Typography
 									sx={{
 										color: 'secondary.main',
-										fontSize: '21px',
+										fontSize: '15px',
 										fontWeight: '600',
 									}}>
 									{pomodoroNumber}
@@ -115,8 +115,8 @@ export const TaskCard = ({
 							)}
 							<Iconify
 								icon='material-symbols:pace'
-								width={25}
-								height={25}
+								width={20}
+								height={20}
 								sx={{ color: 'secondary.main', px: '5px' }}
 							/>
 						</Stack>
@@ -183,7 +183,7 @@ export const TaskCard = ({
 									color='inherit'
 									sx={{
 										backgroundColor: 'primary.light',
-										padding: '15px',
+										padding: { xs: '10px', sm: '15px' },
 										':hover': { backgroundColor: 'primary.lightHover' },
 									}}>
 									<Iconify
