@@ -19,6 +19,8 @@ import {
 import { Iconify } from '../../components';
 import { useForm } from 'react-hook-form';
 
+import signInWithGoogleImage from '../../assets/images/btn_google_signin_light_normal_web@2x.png';
+
 import styles from './Register.module.scss';
 
 export function Register() {
@@ -136,19 +138,18 @@ export function Register() {
 							</Divider>
 							<Button
 								size='large'
-								color='inherit'
-								variant='outlined'
 								onClick={signInWithGoogle}
-								sx={{ textTransform: 'unset', mt: 4 }}>
-								<Iconify icon='eva:google-fill' width={22} height={22} />
-								<Typography as='p' sx={{ pl: 2, fontWeight: 600 }}>
-									Google
-								</Typography>
+								sx={{ padding: 0, mt: 4 }}>
+								<img
+									className={styles.registerButtonImage}
+									src={signInWithGoogleImage}
+									alt='google logo with sign in with google text'
+								/>
 							</Button>
 							<Typography variant='body1' sx={{ mt: 4, textAlign: 'center' }}>
 								Already have an account?{' '}
 								<Link to='/login' className={styles.link}>
-									Login now
+									Log in now
 								</Link>
 								.
 							</Typography>

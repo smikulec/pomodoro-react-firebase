@@ -15,6 +15,7 @@ import { useAuth } from '../../contexts';
 import styles from './Login.module.scss';
 import { Container } from '@mui/system';
 import { useForm } from 'react-hook-form';
+import signInWithGoogleImage from '../../assets/images/btn_google_signin_light_normal_web@2x.png';
 
 export function Login() {
 	const [showPassword, setShowPassword] = useState(false);
@@ -67,7 +68,7 @@ export function Login() {
 							maxWidth: '360px',
 							textAlign: 'center',
 						}}>
-						Please enter your credentials to access your account.
+						Log in to your account to get started.
 					</Typography>
 
 					<Box sx={{ maxWidth: '480px', margin: '0 auto' }}>
@@ -131,7 +132,7 @@ export function Login() {
 								letterSpacing: 1.5,
 							}}
 							isLoading={isLoading}>
-							Login
+							Log in
 						</Button>
 					</Box>
 					<Box
@@ -142,22 +143,20 @@ export function Login() {
 						}}>
 						<Divider sx={{ mt: 4, width: '170px' }}>
 							<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-								or login with
+								or log in with
 							</Typography>
 						</Divider>
 						<Button
-							size='large'
-							color='inherit'
-							variant='outlined'
 							onClick={onLogin}
 							sx={{
-								textTransform: 'unset',
+								padding: 0,
 								mt: 4,
 							}}>
-							<Iconify icon='eva:google-fill' width={22} height={22} />
-							<Typography as='p' sx={{ pl: 2, fontWeight: 600 }}>
-								Google
-							</Typography>
+							<img
+								className={styles.loginButtonImage}
+								src={signInWithGoogleImage}
+								alt='google logo with sign in with google text'
+							/>
 						</Button>
 						<Typography variant='body1' sx={{ mt: 4, textAlign: 'center' }}>
 							Don’t have an account? {''}
