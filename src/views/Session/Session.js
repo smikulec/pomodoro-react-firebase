@@ -48,7 +48,12 @@ export const Session = () => {
 			<Box maxWidth='sm' sx={{ mb: 6 }}>
 				<Typography variant='h6'>What would you like to work on?</Typography>
 			</Box>
-			<Paper sx={{ maxWidth: '450px', borderRadius: '28px', padding: '40px' }}>
+			<Paper
+				sx={{
+					maxWidth: '450px',
+					borderRadius: '28px',
+					padding: { xs: '20px', md: '40px' },
+				}}>
 				<InputLabel
 					sx={{ color: 'primary.contrastText', fontWeight: 600, pb: 1 }}>
 					Task name
