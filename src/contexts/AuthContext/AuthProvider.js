@@ -10,6 +10,7 @@ import {
 } from '../../firebase/firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
 import { useLocation, redirect } from 'react-router-dom';
+import { useAlert } from '../../hooks';
 
 const AuthContext = createContext({ isLoggedIn: null });
 
@@ -19,10 +20,16 @@ export const AuthProvider = ({ children }) => {
 	const [userData, setUserData] = useState(null);
 	const [isLoadingData, setIsLoadingData] = useState(false);
 
+	const { showAlert } = useAlert();
+
+	const loginSuccessfulRedirect = () => {
+		const origin = location.state?.from?.pathname || '/dashboard';
+		redirect(origin);
+	};
+
 	useEffect(() => {
-		if (loading) return;
-		if (!user) {
-			console.log('there was an error');
+		if (loading || !user) {
+			return;
 		}
 
 		const fetchUserName = async () => {
@@ -44,17 +51,29 @@ export const AuthProvider = ({ children }) => {
 
 	const handleLogin = async (email, password) => {
 		if (email && password) {
-			await logInWithEmailAndPassword(email, password);
+			try {
+				await logInWithEmailAndPassword(email, password);
+				loginSuccessfulRedirect();
+			} catch (error) {
+				showAlert.error('There was an error with login, please try again.');
+			}
 		} else {
-			await signInWithGoogle();
+			try {
+				await signInWithGoogle();
+				loginSuccessfulRedirect();
+			} catch (error) {
+				showAlert.error('There was an error with login, please try again.');
+			}
 		}
-		const origin = location.state?.from?.pathname || '/dashboard';
-		redirect(origin);
 	};
 
-	const handleLogout = () => {
-		logout();
-		redirect('/login');
+	const handleLogout = async () => {
+		try {
+			await logout();
+			redirect('/login');
+		} catch (error) {
+			showAlert.error('There was an error with the logout, please try again.');
+		}
 	};
 
 	const value = {
