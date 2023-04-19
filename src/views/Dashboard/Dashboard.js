@@ -20,23 +20,30 @@ export function Dashboard() {
 				before or start something new.
 			</Typography>
 
-			<Paper
-				sx={{ borderRadius: '28px', padding: { xs: '10px', sm: '10px 20px' } }}>
-				{isLoading ? (
-					<Box sx={{ height: '300px', position: 'relative' }}>
-						<Loader />
-					</Box>
-				) : (
-					uncompletedTasks.map((task, index) => (
-						<TaskCard
-							taskData={task}
-							key={task.id}
-							onDataChange={refreshTodoList}
-							noBottomBorder={index === uncompletedTasks.length - 1}
-						/>
-					))
-				)}
-			</Paper>
+			{uncompletedTasks.length === 0 ? (
+				<Typography>There are no tasks ready to be worked on.</Typography>
+			) : (
+				<Paper
+					sx={{
+						borderRadius: '28px',
+						padding: { xs: '10px', sm: '10px 20px' },
+					}}>
+					{isLoading ? (
+						<Box sx={{ height: '300px', position: 'relative' }}>
+							<Loader />
+						</Box>
+					) : (
+						uncompletedTasks.map((task, index) => (
+							<TaskCard
+								taskData={task}
+								key={task.id}
+								onDataChange={refreshTodoList}
+								noBottomBorder={index === uncompletedTasks.length - 1}
+							/>
+						))
+					)}
+				</Paper>
+			)}
 
 			<Button
 				fullWidth
