@@ -9,7 +9,7 @@ export const useCurrentUser = () => {
 	const [userData, setUserData] = useState({});
 
 	useEffect(() => {
-		if (loading) return;
+		if (loading || !user) return;
 		if (!user) {
 			console.log('there was an error');
 		}
