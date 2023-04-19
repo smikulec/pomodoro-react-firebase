@@ -52,7 +52,7 @@ export function Login() {
 						borderRadius: '35px',
 						backgroundColor: 'white',
 						maxWidth: '550px',
-						padding: { xs: '40px 25px', sm: '80px 50px' },
+						padding: { xs: '40px 25px', sm: '45px 30px' },
 						width: '100%',
 					}}>
 					<Typography
@@ -72,23 +72,29 @@ export function Login() {
 					</Typography>
 
 					<Box sx={{ maxWidth: '480px', margin: '0 auto' }}>
-						<Stack fullWidth spacing={3}>
+						<Stack spacing={2}>
 							<TextField
 								name='email'
 								label='Email address'
 								{...register('email', {
-									required: 'This is required!',
+									required: 'This field is required.',
+									pattern: {
+										value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+										message: 'Invalid email address',
+									},
 								})}
-								error={errors?.email ? true : false}
+								error={!!errors.email}
+								helperText={errors?.email ? errors?.email?.message : ' '}
 							/>
 							<TextField
 								name='password'
 								label='Password'
 								type={showPassword ? 'text' : 'password'}
 								{...register('password', {
-									required: 'This is required!',
+									required: 'This field is required.',
 								})}
-								error={errors?.password ? true : false}
+								error={!!errors.password}
+								helperText={errors?.password ? errors?.password?.message : ' '}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position='end'>
@@ -108,11 +114,10 @@ export function Login() {
 						</Stack>
 
 						<Stack
-							fullWidth
 							spacing={3}
 							direction='row'
 							alignItems='center'
-							sx={{ mt: 2, mb: 4 }}>
+							sx={{ pt: 1, pb: 4 }}>
 							<Typography variant='body1'>
 								<Link to='/reset' className={styles.link}>
 									Forgot password?
@@ -130,8 +135,7 @@ export function Login() {
 								textTransform: 'unset',
 								fontWeight: 600,
 								letterSpacing: 1.5,
-							}}
-							isLoading={isLoading}>
+							}}>
 							Log in
 						</Button>
 					</Box>
