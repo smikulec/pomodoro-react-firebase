@@ -33,6 +33,7 @@ export function Register() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		watch,
 	} = useForm();
 
 	useEffect(() => {
@@ -44,6 +45,8 @@ export function Register() {
 		registerWithEmailAndPassword(data.name, data.email, data.password);
 	};
 
+	const password = watch('password');
+
 	return (
 		<form className={styles.wrapper} onSubmit={handleSubmit(handleRegister)}>
 			<Container
@@ -51,14 +54,15 @@ export function Register() {
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
-					height: '100vh',
+					marginTop: '50px',
+					marginBottom: '50px',
 				}}>
 				<Box
 					sx={{
 						borderRadius: '35px',
 						backgroundColor: 'white',
 						maxWidth: '550px',
-						padding: { xs: '40px 25px', sm: '80px 50px' },
+						padding: { xs: '40px 25px', sm: '40px 30px' },
 						width: '100%',
 					}}>
 					<Typography
@@ -73,31 +77,67 @@ export function Register() {
 					</Typography>
 
 					<div className={styles.container}>
-						<Stack fullWidth spacing={3}>
+						<Stack spacing={2}>
 							<TextField
 								name='name'
 								label='Full name'
 								{...register('name', {
-									required: 'This is required!',
+									required: 'This field is required.',
 								})}
-								error={errors?.name ? true : false}
+								error={!!errors?.name}
+								helperText={errors?.name ? errors?.name?.message : ' '}
 							/>
 							<TextField
 								name='email'
 								label='Email address'
 								{...register('email', {
-									required: 'This is required!',
+									required: 'This field is required.',
+									pattern: {
+										value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+										message: 'Invalid email address',
+									},
 								})}
-								error={errors?.email ? true : false}
+								error={!!errors.email}
+								helperText={errors?.email ? errors?.email?.message : ' '}
 							/>
 							<TextField
 								name='password'
 								label='Password'
 								type={showPassword ? 'text' : 'password'}
 								{...register('password', {
-									required: 'This is required!',
+									required: 'This field is required.',
 								})}
-								error={errors?.password ? true : false}
+								error={!!errors.password}
+								helperText={errors?.password ? errors?.password?.message : ' '}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position='end'>
+											<IconButton
+												onClick={() => setShowPassword(!showPassword)}
+												edge='end'>
+												<Iconify
+													icon={
+														showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'
+													}
+												/>
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
+							<TextField
+								name='repeatPassword'
+								label='Repeat password'
+								type={showPassword ? 'text' : 'password'}
+								{...register('repeatPassword', {
+									required: 'This field is required.',
+									validate: (value) =>
+										value === password || 'Passwords do not match.',
+								})}
+								error={!!errors.repeatPassword}
+								helperText={
+									errors?.repeatPassword ? errors?.repeatPassword?.message : ' '
+								}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position='end'>
@@ -133,7 +173,7 @@ export function Register() {
 						<div className={styles.sectionContainer}>
 							<Divider sx={{ mt: 4, width: '170px' }}>
 								<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-									Or register with
+									or register with
 								</Typography>
 							</Divider>
 							<Button
