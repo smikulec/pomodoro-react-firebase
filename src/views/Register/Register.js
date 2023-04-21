@@ -24,7 +24,6 @@ import signInWithGoogleImage from '../../assets/images/btn_google_signin_light_n
 import styles from './Register.module.scss';
 
 export function Register() {
-	// TODO: handle error state
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 	const { user, isLoading } = useAuth();
