@@ -4,6 +4,7 @@ import {
 	Typography,
 	Box,
 	IconButton,
+	Tooltip,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
@@ -36,13 +37,15 @@ const TimeCounter = ({
 					size='22rem'
 					variant='determinate'
 					value={100}
-					sx={{ color: 'primary.contrastText' }}
+					// sx={{ color: 'primary.contrastText' }}
+					color='primary'
 				/>
 				<Circle
 					size='22rem'
 					variant='determinate'
 					value={progress}
-					color='primary'
+					// color='primary'
+					sx={{ color: 'primary.contrastText' }}
 				/>
 				<div className={styles.timeCounter}>
 					{min}:{sec.toString().length === 1 ? '0' + sec : sec}
@@ -53,39 +56,45 @@ const TimeCounter = ({
 				alignItems='center'
 				sx={{ mt: 1, color: 'primary' }}>
 				<Box>
-					<IconButton onClick={onReset} sx={{ mx: 2 }}>
-						<Iconify
-							icon='material-symbols:restart-alt-rounded'
-							width={40}
-							height={40}
-							color='primary.contrastText'
-						/>
-					</IconButton>
-					<IconButton onClick={onToggleActive} sx={{ mx: 2 }}>
-						{isActive ? (
+					<Tooltip title='Reset session'>
+						<IconButton onClick={onReset} sx={{ mx: 2 }}>
 							<Iconify
-								icon='material-symbols:stop-circle-outline-rounded'
+								icon='material-symbols:restart-alt-rounded'
 								width={40}
 								height={40}
 								color='primary.contrastText'
 							/>
-						) : (
+						</IconButton>
+					</Tooltip>
+					<Tooltip title={isActive ? 'Pause session' : 'Start session'}>
+						<IconButton onClick={onToggleActive} sx={{ mx: 2 }}>
+							{isActive ? (
+								<Iconify
+									icon='material-symbols:pause-circle-outline-rounded'
+									width={40}
+									height={40}
+									color='primary.contrastText'
+								/>
+							) : (
+								<Iconify
+									icon='material-symbols:play-circle-outline-rounded'
+									width={40}
+									height={40}
+									color='primary.contrastText'
+								/>
+							)}
+						</IconButton>
+					</Tooltip>
+					<Tooltip title='Go to the next session'>
+						<IconButton onClick={onNext} sx={{ mx: 2 }}>
 							<Iconify
-								icon='material-symbols:play-circle-outline-rounded'
+								icon='material-symbols:next-plan-outline-rounded'
 								width={40}
 								height={40}
 								color='primary.contrastText'
 							/>
-						)}
-					</IconButton>
-					<IconButton onClick={onNext} sx={{ mx: 2 }}>
-						<Iconify
-							icon='material-symbols:next-plan-outline-rounded'
-							width={40}
-							height={40}
-							color='primary.contrastText'
-						/>
-					</IconButton>
+						</IconButton>
+					</Tooltip>
 				</Box>
 				<Typography variant='p' fontWeight={600} fontSize='20px' sx={{ mt: 1 }}>
 					{sessionRoundsProgress}
