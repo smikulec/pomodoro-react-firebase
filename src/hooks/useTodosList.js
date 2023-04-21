@@ -58,18 +58,32 @@ export const useTodosList = () => {
 		setTodos(newTodos);
 	}, [wholeTodos, user?.uid]);
 
+	const addToDoToCollection = async (data) => {
+		return new Promise(async (reject, resolve) => {
+			try {
+				const docRef = await addDoc(collection(db, 'todos'), {
+					...data,
+					userId: user?.uid,
+					createdAt: new Date().toISOString(),
+				});
+				resolve({ success: true, id: docRef.id });
+			} catch (error) {
+				reject(error);
+				console.error('Error adding document: ', error);
+			}
+		});
+	};
+
 	const addTodo = async (data) => {
 		try {
-			await addDoc(collection(db, 'todos'), {
+			const docRef = await addDoc(collection(db, 'todos'), {
 				...data,
 				userId: user?.uid,
 				createdAt: new Date().toISOString(),
 			});
-			fetchTodos();
-			showAlert.success('Task successfully created!');
-		} catch (e) {
-			console.error('Error adding document: ', e);
-			showAlert.error('Something went wrong, please try again');
+			return docRef.id;
+		} catch (error) {
+			throw new Error('Something went wrong, please try again');
 		}
 	};
 
