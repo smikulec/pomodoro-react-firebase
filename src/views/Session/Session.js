@@ -4,14 +4,13 @@ import {
 	Box,
 	Paper,
 	InputLabel,
-	OutlinedInput,
 	Divider,
 	TextField,
 	Tooltip,
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { useTodosList } from '../../hooks';
+import { useAlert, useTodosList } from '../../hooks';
 import { CounterWizard, Iconify } from '../../components';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +20,8 @@ export const Session = () => {
 	const [shortBreakLength, setShortBreakLength] = useState(5);
 	const [longBreakLength, setLongBreakLength] = useState(15);
 	const [rounds, setRounds] = useState(4);
+
+	const { showAlert } = useAlert();
 
 	const navigate = useNavigate();
 	const methods = useForm();
@@ -46,9 +47,12 @@ export const Session = () => {
 			};
 			const docId = await addTodo(preparedData);
 
-			if (response) {
-				navigate('/timer', { state: { data: taskData } });
-			}
+			showAlert.success('Task successfully created!');
+
+			// TODO implement redirect with task data
+			// if (docId) {
+			// 	navigate('/timer', { state: { data: taskData } });
+			// }
 		} catch (error) {
 			showAlert.error(error.message);
 		}
