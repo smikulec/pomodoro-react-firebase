@@ -56,8 +56,6 @@ export const Session = () => {
 		} catch (error) {
 			showAlert.error(error.message);
 		}
-
-		navigate('/');
 	};
 
 	return (
