@@ -1,7 +1,34 @@
-import { IconButton, Stack, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	IconButton,
+	Stack,
+	TextField,
+	Tooltip,
+	Typography,
+} from '@mui/material';
 import { Iconify } from '../Iconify';
+import { useFormContext } from 'react-hook-form';
 
-export const CounterWizard = ({ title, time, onLengthChange }) => {
+function toCamelCase(str) {
+	const words = str.split(' ');
+	const capitalizedWords = words.map((word, index) => {
+		if (index === 0) {
+			return word;
+		} else {
+			return word.charAt(0).toUpperCase() + word.slice(1);
+		}
+	});
+	const camelCaseStr = capitalizedWords.join('');
+	return camelCaseStr.charAt(0).toLowerCase() + camelCaseStr.slice(1);
+}
+
+export const CounterWizard = ({ title, time, onLengthChange, info }) => {
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext();
+
+	const fieldName = toCamelCase(title);
 	const handleButtonClick = (action) => {
 		if (action === 'increment') {
 			onLengthChange((prev) => prev + 1);
@@ -16,68 +43,89 @@ export const CounterWizard = ({ title, time, onLengthChange }) => {
 		}
 	};
 
+	console.log('errors', errors, errors[fieldName]?.message, fieldName);
+
 	return (
-		<Stack
-			sx={{ mb: 3, maxWidth: '350px' }}
-			direction='row'
-			alignItems='center'
-			justifyContent='space-between'>
-			<Typography variant='subtitle1' fontWeight={700} sx={{ pb: 1, pr: 2 }}>
-				{title} (min)
-			</Typography>
+		<>
 			<Stack
+				sx={{ mb: 3, maxWidth: '360px' }}
 				direction='row'
 				alignItems='center'
-				sx={{
-					padding: '6px',
-					backgroundColor: '#FFFFFF',
-					border: '1px solid #CBD5E1',
-					borderRadius: '6px',
-					width: { xs: '140px', md: '160px' },
-					flexShrink: 0,
-					flexGrow: 0,
-				}}>
-				<IconButton
-					onClick={() => handleButtonClick('decrement')}
-					sx={{
-						color: 'primary.contrastText',
-						borderRadius: '6px',
-						backgroundColor: 'primary.main',
-						':hover': { backgroundColor: 'primary.active' },
-					}}>
-					<Iconify icon='mdi:minus' />
-				</IconButton>
-				<TextField
-					value={time}
-					variant='standard'
-					onChange={handleInputChange}
-					sx={{ borderBottom: 'none' }}
-					InputProps={{
-						disableUnderline: true,
-						sx: {
-							px: 1,
-							fontWeight: 600,
+				justifyContent='space-between'>
+				<Typography variant='subtitle1' fontWeight={700} sx={{ pb: 1, pr: 2 }}>
+					{title} (min)
+				</Typography>
 
-							'& input': {
-								textAlign: 'center',
-								'&::placeholder': {
+				<Stack
+					direction='row'
+					alignItems='center'
+					sx={{
+						padding: '6px',
+						backgroundColor: '#FFFFFF',
+						border: !!errors[fieldName] ? '1px solid red' : '1px solid #CBD5E1',
+						borderRadius: '6px',
+						width: { xs: '140px', md: '160px' },
+						flexShrink: 0,
+						flexGrow: 0,
+					}}>
+					<IconButton
+						onClick={() => handleButtonClick('decrement')}
+						sx={{
+							color: 'primary.contrastText',
+							borderRadius: '6px',
+							backgroundColor: 'primary.main',
+							':hover': { backgroundColor: 'primary.active' },
+						}}>
+						<Iconify icon='mdi:minus' />
+					</IconButton>
+					<TextField
+						name={fieldName}
+						value={time}
+						variant='standard'
+						{...register(`${fieldName}`, {
+							required: true,
+							validate: (v) => v > 1 || 'This is not the right value.',
+						})}
+						onChange={handleInputChange}
+						sx={{ borderBottom: 'none' }}
+						InputProps={{
+							disableUnderline: true,
+							sx: {
+								px: 1,
+								fontWeight: 600,
+
+								'& input': {
 									textAlign: 'center',
+									'&::placeholder': {
+										textAlign: 'center',
+									},
 								},
 							},
-						},
-					}}
-				/>
-				<IconButton
-					onClick={() => handleButtonClick('increment')}
-					sx={{
-						color: 'primary.contrastText',
-						borderRadius: '6px',
-						backgroundColor: 'primary.main',
-						':hover': { backgroundColor: 'primary.active' },
-					}}>
-					<Iconify icon='mdi:plus' />
-				</IconButton>
+						}}
+						error={errors?.fieldName}
+						helperText={errors?.fieldName?.message}
+					/>
+					<IconButton
+						onClick={() => handleButtonClick('increment')}
+						sx={{
+							color: 'primary.contrastText',
+							borderRadius: '6px',
+							backgroundColor: 'primary.main',
+							':hover': { backgroundColor: 'primary.active' },
+						}}>
+						<Iconify icon='mdi:plus' />
+					</IconButton>
+				</Stack>
+				<Box sx={{ flexGrow: 0, flexShrink: 0 }}>
+					<Tooltip title={info} placement='right'>
+						<Iconify
+							icon='material-symbols:info-outline-rounded'
+							sx={{ ml: 2, fontSize: '30px' }}
+							width={25}
+						/>
+					</Tooltip>
+				</Box>
 			</Stack>
-		</Stack>
+		</>
 	);
 };
