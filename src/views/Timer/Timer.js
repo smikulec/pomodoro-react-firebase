@@ -26,6 +26,8 @@ const TimeCounter = ({
   onToggleActive,
   sessionRoundsProgress,
   onNext,
+  sessionCount,
+  roundsCount,
 }) => {
   const min = Math.floor(time / 1000 / 60);
   const sec = Math.floor((time / 1000) % 60);
@@ -57,7 +59,7 @@ const TimeCounter = ({
         sx={{ mt: 1, color: "primary" }}
       >
         <Box>
-          <Tooltip title="Reset session">
+          <Tooltip title="Reset round">
             <IconButton onClick={onReset} sx={{ mt: 2 }}>
               <Iconify
                 icon="material-symbols:restart-alt-rounded"
@@ -67,7 +69,7 @@ const TimeCounter = ({
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title={isActive ? "Pause session" : "Start session"}>
+          <Tooltip title={isActive ? "Pause round" : "Start round"}>
             <IconButton onClick={onToggleActive} sx={{ mt: 2 }}>
               {isActive ? (
                 <Iconify
@@ -86,8 +88,12 @@ const TimeCounter = ({
               )}
             </IconButton>
           </Tooltip>
-          <Tooltip title="Go to the next session">
-            <IconButton onClick={onNext} sx={{ mt: 2 }}>
+          <Tooltip title="Go to the next round">
+            <IconButton
+              onClick={onNext}
+              sx={{ mt: 2 }}
+              disabled={sessionCount === roundsCount}
+            >
               <Iconify
                 icon="material-symbols:next-plan-outline-rounded"
                 width={40}
@@ -249,7 +255,7 @@ export const Timer = () => {
               ? "Time to focus!"
               : isLongBreakTime
               ? "Go have a nice long break, you deserved it!"
-              : "Time to have a break, go stretch and move your bodeee"}
+              : "Time to have a break, go stretch and move your body."}
           </Typography>
           <TimeCounter
             isActive={isActive}
@@ -257,6 +263,8 @@ export const Timer = () => {
             progress={progress}
             time={timeLeft}
             onReset={handleReset}
+            sessionCount={sessionCounter}
+            roundsCount={taskData.rounds}
             sessionRoundsProgress={`${sessionCounter} / ${taskData.rounds}`}
             onNext={() => {
               if (sessionCounter < taskData.rounds) {
