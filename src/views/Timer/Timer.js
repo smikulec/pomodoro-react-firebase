@@ -101,7 +101,7 @@ const TimeCounter = ({
           <Typography fontWeight={600} fontSize="20px" sx={{ mt: 1 }}>
             {sessionRoundsProgress}
           </Typography>
-          <Typography fontWeight={600} fontSize="20px" sx={{ mt: 1 }}>
+          <Typography fontWeight={600} fontSize="20px">
             rounds
           </Typography>
         </Box>
