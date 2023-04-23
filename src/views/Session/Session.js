@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useAlert, useTodosList } from "../../hooks";
 import { CounterWizard, Iconify } from "../../components";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const Session = () => {
   const [sessionLength, setSessionLength] = useState(25);
@@ -22,8 +23,16 @@ export const Session = () => {
 
   const { showAlert } = useAlert();
 
-  // const navigate = useNavigate();
-  const methods = useForm();
+  const navigate = useNavigate();
+  const methods = useForm({
+    defaultValues: {
+      taskName: "",
+      shortBreakLength: 5,
+      longBreakLength: 15,
+      pomodoroRounds: 4,
+      workSessionLength: 25,
+    },
+  });
 
   const {
     register,
@@ -37,26 +46,30 @@ export const Session = () => {
     try {
       const preparedData = {
         taskName: data.taskName,
-        rounds: rounds,
-        sessionLength: sessionLength,
-        shortBreakLength: shortBreakLength,
-        longBreakLength: longBreakLength,
+        rounds: parseInt(rounds, 10),
+        sessionLength: parseInt(sessionLength, 10),
+        shortBreakLength: parseInt(shortBreakLength, 10),
+        longBreakLength: parseInt(longBreakLength, 10),
         totalTime: 0,
         isCompleted: false,
       };
-      // const docId = await addTodo(preparedData);
-      await addTodo(preparedData);
 
-      showAlert.success("Task successfully created!");
+      const docId = await addTodo(preparedData);
 
-      // TODO implement redirect with task data
-      // if (docId) {
-      // 	navigate('/timer', { state: { data: taskData } });
-      // }
+      if (docId) {
+        showAlert.success("Task successfully created!");
+        navigate("/timer", { state: { data: { ...preparedData, id: docId } } });
+      }
     } catch (error) {
       showAlert.error(error.message);
     }
   };
+
+  const isPomodoroSetupError =
+    errors?.shortBreakLength ||
+    errors?.longBreakLength ||
+    errors?.workSessionLength ||
+    errors?.pomodoroRounds;
 
   return (
     <FormProvider {...methods}>
@@ -76,7 +89,7 @@ export const Session = () => {
           >
             <Iconify
               icon="material-symbols:info-outline-rounded"
-              sx={{ ml: 1 }}
+              sx={{ ml: 1, "&:hover": { cursor: "pointer" } }}
             />
           </Tooltip>
         </Stack>
@@ -99,16 +112,19 @@ export const Session = () => {
             fullWidth
             name="taskName"
             variant="standard"
-            {...register("taskName", { required: true })}
+            {...register("taskName", {
+              required: "You have to enter task name.",
+            })}
             error={!!errors?.taskName}
-            helperText={errors?.taskName?.message}
+            helperText={errors?.taskName?.message ?? " "}
           />
           <Divider
             sx={{
               width: "100px",
               borderColor: "primary.main",
               borderBottomWidth: "4px",
-              my: 4,
+              mt: 3,
+              mb: 4,
             }}
           />
           <Stack>
@@ -137,6 +153,13 @@ export const Session = () => {
               info="The length of the break you take between each work round."
             />
           </Stack>
+
+          {isPomodoroSetupError && (
+            <Typography color="error">
+              All the values have to be bigger than 0.
+            </Typography>
+          )}
+
           <Button
             fullWidth
             variant="contained"
