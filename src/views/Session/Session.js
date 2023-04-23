@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useAlert, useTodosList } from "../../hooks";
 import { CounterWizard, Iconify } from "../../components";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 export const Session = () => {
   const [sessionLength, setSessionLength] = useState(25);
@@ -46,6 +45,7 @@ export const Session = () => {
         isCompleted: false,
       };
       // const docId = await addTodo(preparedData);
+      await addTodo(preparedData);
 
       showAlert.success("Task successfully created!");
 
