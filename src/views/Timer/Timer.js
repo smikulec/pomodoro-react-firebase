@@ -58,7 +58,7 @@ const TimeCounter = ({
       >
         <Box>
           <Tooltip title="Reset session">
-            <IconButton onClick={onReset} sx={{ mx: 2 }}>
+            <IconButton onClick={onReset} sx={{ mt: 2 }}>
               <Iconify
                 icon="material-symbols:restart-alt-rounded"
                 width={40}
@@ -68,7 +68,7 @@ const TimeCounter = ({
             </IconButton>
           </Tooltip>
           <Tooltip title={isActive ? "Pause session" : "Start session"}>
-            <IconButton onClick={onToggleActive} sx={{ mx: 2 }}>
+            <IconButton onClick={onToggleActive} sx={{ mt: 2 }}>
               {isActive ? (
                 <Iconify
                   icon="material-symbols:pause-circle-outline-rounded"
@@ -87,7 +87,7 @@ const TimeCounter = ({
             </IconButton>
           </Tooltip>
           <Tooltip title="Go to the next session">
-            <IconButton onClick={onNext} sx={{ mx: 2 }}>
+            <IconButton onClick={onNext} sx={{ mt: 2 }}>
               <Iconify
                 icon="material-symbols:next-plan-outline-rounded"
                 width={40}
@@ -97,12 +97,12 @@ const TimeCounter = ({
             </IconButton>
           </Tooltip>
         </Box>
-        <Box>
+        <Box sx={{ mt: 4, textAlign: "center" }}>
           <Typography fontWeight={600} fontSize="20px" sx={{ mt: 1 }}>
             {sessionRoundsProgress}
           </Typography>
           <Typography fontWeight={600} fontSize="20px" sx={{ mt: 1 }}>
-            sessions
+            rounds
           </Typography>
         </Box>
       </Stack>
