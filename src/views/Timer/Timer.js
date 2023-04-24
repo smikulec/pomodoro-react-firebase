@@ -39,14 +39,12 @@ const TimeCounter = ({
           size="22rem"
           variant="determinate"
           value={100}
-          // sx={{ color: 'primary.contrastText' }}
           color="primary"
         />
         <Circle
           size="22rem"
           variant="determinate"
           value={progress}
-          // color='primary'
           sx={{ color: "primary.contrastText" }}
         />
         <div className={styles.timeCounter}>
@@ -91,7 +89,7 @@ const TimeCounter = ({
           <Tooltip title="Go to the next round">
             <IconButton
               onClick={onNext}
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, "&.Mui-disabled": { opacity: 0.5 } }}
               disabled={sessionCount === roundsCount}
             >
               <Iconify
