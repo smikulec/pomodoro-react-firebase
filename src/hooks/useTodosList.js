@@ -58,23 +58,6 @@ export const useTodosList = () => {
     setTodos(newTodos);
   }, [wholeTodos, user?.uid]);
 
-  /*
-	const addToDoToCollection = async (data) => {
-		return new Promise(async (reject, resolve) => {
-			try {
-				const docRef = await addDoc(collection(db, 'todos'), {
-					...data,
-					userId: user?.uid,
-					createdAt: new Date().toISOString(),
-				});
-				resolve({ success: true, id: docRef.id });
-			} catch (error) {
-				reject(error);
-				console.error('Error adding document: ', error);
-			}
-		});
-	};
-*/
   const addTodo = async (data) => {
     try {
       const docRef = await addDoc(collection(db, "todos"), {
@@ -89,11 +72,11 @@ export const useTodosList = () => {
   };
 
   const updateTodo = async (data) => {
-    setIsDataChanged(false);
-    const documentId = data.id;
-    delete data.id;
-    const docRef = doc(db, "todos", documentId);
     try {
+      setIsDataChanged(false);
+      const documentId = data.id;
+      delete data.id;
+      const docRef = doc(db, "todos", documentId);
       await updateDoc(docRef, {
         ...data,
         userId: user.uid,
@@ -107,8 +90,8 @@ export const useTodosList = () => {
   };
 
   const deleteTodo = async (documentId) => {
-    const docRef = doc(db, "todos", documentId);
     try {
+      const docRef = doc(db, "todos", documentId);
       await deleteDoc(docRef);
       showAlert.success("Task successfully deleted!");
       fetchTodos();
