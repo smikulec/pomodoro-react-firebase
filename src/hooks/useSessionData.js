@@ -55,8 +55,8 @@ export const useSessionData = () => {
     try {
       const todaysSessionQuery = query(
         sessionRef,
-        where("startTime", ">=", isoTodayDateString),
-        where("userId", "==", user?.uid)
+        where("userId", "==", user?.uid),
+        where("startTime", ">=", isoTodayDateString)
       );
       const todaysSessionSnap = await getDocs(todaysSessionQuery);
       const todaysSessionData =
@@ -153,11 +153,12 @@ export const useSessionData = () => {
   };
 
   const updateSession = async (data) => {
-    const documentId = data.id;
-    delete data.id;
-    const docRef = doc(db, "sessions", documentId);
     try {
-      await updateDoc(docRef, { ...data, userId: user?.uid });
+      const documentId = data.id;
+      delete data.id;
+      const docRef = doc(db, "sessions", documentId);
+      const preparedData = { ...data, userId: user?.uid };
+      await updateDoc(docRef, preparedData);
       fetchTodaysSession();
     } catch (e) {
       console.error("Error updating document: ", e);
