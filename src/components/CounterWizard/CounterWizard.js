@@ -52,7 +52,7 @@ export const CounterWizard = ({ title, time, onLengthChange, info }) => {
         justifyContent="space-between"
       >
         <Typography variant="subtitle1" fontWeight={700} sx={{ pb: 1, pr: 2 }}>
-          {title} (min)
+          {title} {title.includes("rounds") ? "" : "(min)"}
         </Typography>
 
         <Stack
